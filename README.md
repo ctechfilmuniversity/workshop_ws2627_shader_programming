@@ -1,0 +1,1 @@
+[https://ctechfilmuniversity.github.io/workshop_ws2627_shader_programming/](https://ctechfilmuniversity.github.io/workshop_ws2627_shader_programming/)
