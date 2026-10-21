@@ -32,5 +32,5 @@ For running the code examples:
 
 ### three.js
 
-1. Shader Pipeline: [steps](./threejs/shader_pipeline/shader_pipeline_steps.md), [code](./threejs/shader_pipeline/shader_pipeline_code.zip)
+1. Shader Pipeline: [steps](./threejs/01_shader_pipeline/shader_pipeline_steps.md), [code](./threejs/01_shader_pipeline/shader_pipeline_code.zip)
 
