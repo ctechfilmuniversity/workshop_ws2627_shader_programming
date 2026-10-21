@@ -62,9 +62,6 @@ Technology
 --
 * Fragment shader 
 
---
-* Example Unreal
-
 
 
 --
@@ -299,9 +296,6 @@ We use *implicit geometry* descriptions and *sphere tracing* as rendering algori
 * Examples
 
 --
-* Unreal shader
-
---
 * Creative Exploration
 
 ---
@@ -345,7 +339,6 @@ With this workshop you gain
 
 * Shader Pipeline & GLSL
 * The vertex and fragment shader in three.js
-* (Implicit Geometry in 2D)
 
   
 <!--  
