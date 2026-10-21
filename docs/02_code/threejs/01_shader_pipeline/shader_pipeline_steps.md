@@ -13,7 +13,6 @@ We start from the basic scene with a white plane (`MeshBasicMaterial`) and repla
 
 **Tip:** Install the Visual Studio Code extension [Shader languages support for VS Code](https://marketplace.visualstudio.com/items?itemName=slevesque.shader) for syntax highlighting in shader files.
 
-**How to read this document:** every change you have to make is marked with **▶ TODO**, names the file, and is followed by a code block. Everything else is explanation.
 
 * [Raw Shader Material](#raw-shader-material)
 * [Add Inline Shader Code](#add-inline-shader-code)

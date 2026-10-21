@@ -39,7 +39,6 @@ Technology
 * Shader pipeline ✓
 * Example three.js ✓
 * Fragment shader 
-* Example Unreal
 
 Scenario
 
@@ -225,13 +224,13 @@ void main() {
 ## Uniforms glsl-canvas 
 
 
-| Type                    | Property        |
-|-------------------------|-----------------|
-| `vec2`                  | u_resolution    |
-| `float`                 | u_time          |
-| `vec2`                  | u_mouse         |
-| `vec3`                  | u_camera        |
-| `vec2[10]`              | u_trails[10]    |
+| Type       | Property     |
+| ---------- | ------------ |
+| `vec2`     | u_resolution |
+| `float`    | u_time       |
+| `vec2`     | u_mouse      |
+| `vec3`     | u_camera     |
+| `vec2[10]` | u_trails[10] |
 
 
 ???

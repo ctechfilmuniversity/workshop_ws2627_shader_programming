@@ -33,4 +33,4 @@ For running the code examples:
 ### three.js
 
 1. Shader Pipeline: [steps](./threejs/01_shader_pipeline/shader_pipeline_steps.md), [code](./threejs/01_shader_pipeline/shader_pipeline_code.zip)
-
+2. A Wavy Situation: [steps](./threejs/02_wavy/wavy_steps.md), [code](./threejs/02_wavy/wavy_steps_code.zip)

@@ -499,11 +499,11 @@ Common drawing operations such as transforming each vertex and colouring each fr
 
 ## GPU
 
-| Release Date | GPU | Shading Units |
-| ------------ | --- | ------------- |
-| 2017 | Nvidia GeForce GTX 1080 Ti | 3584 |
-| 2022 | AMD Radeon RX 7900 XTX | 6144 |
-| 2022 | Nvidia GeForce RTX 4090 | 16384 |
+| Release Date | GPU                        | Shading Units |
+| ------------ | -------------------------- | ------------- |
+| 2017         | Nvidia GeForce GTX 1080 Ti | 3584          |
+| 2022         | AMD Radeon RX 7900 XTX     | 6144          |
+| 2022         | Nvidia GeForce RTX 4090    | 16384         |
 
 
 .footnote[[[Anton Gerdelan]](http://antongerdelan.net/opengl/shaders.html)]
@@ -838,7 +838,7 @@ What’s missing from C in GLSL syntax:
 
 ## Versions Matter!
 
-OpenGL and GLSL are constantly evolving. It is should to be clear about the version you are using.  
+OpenGL and GLSL are constantly evolving. You should be clear about the version you are using.  
 
 
 > Check if your environment expects a specific version.
@@ -1180,7 +1180,10 @@ void main(void)
 }
 ```
 
+---
+.header[Shader Pipeline]
 
+## Data Piping
 
 ---
 .header[Shader Pipeline | Data Piping]
