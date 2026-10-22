@@ -461,6 +461,7 @@ https://antongerdelan.net/opengl/shaders.html
 
 
 ???
+* 6 faces × 2 triangles × 3 vertices = 36
 * Vertex shader
 
 Common drawing operations such as transforming each vertex and colouring each fragment can be done independently. We write a shader (mini program) to compute these operations, and the GPU's highly parallel architecture will attempt to compute them all concurrently.
@@ -504,6 +505,7 @@ Common drawing operations such as transforming each vertex and colouring each fr
 | 2017         | Nvidia GeForce GTX 1080 Ti | 3584          |
 | 2022         | AMD Radeon RX 7900 XTX     | 6144          |
 | 2022         | Nvidia GeForce RTX 4090    | 16384         |
+| 2025         | Nvidia GeForce RTX 5090    | 21760         |
 
 
 .footnote[[[Anton Gerdelan]](http://antongerdelan.net/opengl/shaders.html)]
@@ -598,6 +600,23 @@ https://learnopengl.com/Getting-started/Hello-Triangle
 ## Data Elements
 
 
+| Stage                          | Data Element            |
+| ------------------------------ | ----------------------- |
+| Vertex Shader                  | per vertex              |
+| Tessellation Control Shader    | per vertex (in a patch) |
+| Tessellation Evaluation Shader | per vertex (in a patch) |
+| Geometry Shader                | per primitive           |
+| Fragment Shader                | per fragment            |
+
+
+.footnote[[Joey de Vries. 2020. [Learn OpenGL: Learn modern OpenGL graphics programming in a step-by-step fashion](https://learnopengl.com/Guest-Articles/2022/Compute-Shaders/Introduction). Kendall & Welling]]
+
+---
+.header[Shader Programming]
+
+## Data Elements
+
+
 | Stage                          | Data Element               |
 | ------------------------------ | -------------------------- |
 | Vertex Shader                  | per vertex                 |
@@ -647,13 +666,17 @@ https://learnopengl.com/Getting-started/Hello-Triangle
 * Single-stage, stateless
 
 --
-* No user-defined inputs and no outputs
+* It has no fixed inputs or outputs like vertices or fragments
 
 --
 * *The compute shader itself defines the data "space" it operates on as work groups*
     * You define the number of executions and their initializations
 
 .footnote[[OpenGL Wiki. 2024. [Compute Shader](https://www.khronos.org/opengl/wiki/Compute_Shader), OpenGL Extensions. 2024. [ARB_compute_shader](https://registry.khronos.org/OpenGL/extensions/ARB/ARB_compute_shader.txt); Joey de Vries. 2020. [Learn OpenGL: Learn modern OpenGL graphics programming in a step-by-step fashion](https://learnopengl.com/Guest-Articles/2022/Compute-Shaders/Introduction). Kendall & Welling]]
+
+--
+
+Use cases: E.g., Particle and physics simulation, post processing.
 
 
 ???
@@ -901,8 +924,6 @@ WebGL = **Web** **G**raphics **L**ibrary
 --
 * Based on OpenGL ES
 
---
-
 OpenGL ES = OpenGL for Embedded Systems
 
 * Subset of the OpenGL
@@ -911,7 +932,7 @@ OpenGL ES = OpenGL for Embedded Systems
 
 ???
   
-
+Embedded systems are computers built into a larger device to perform dedicated functions, rather than general purpose PCs. Typical constraints are limited power, memory, heat budget, and cost.
 
 
 ```js
@@ -1128,6 +1149,16 @@ void main() {
 * Uniforms (values that stay the same for all vertices of a single draw call)
 * Textures (data from pixels/texels)
 
+Camera (view) space is the last space that is still linear and metrically meaningful. After the projection, distances and angles are distorted by the perspective, and the homogeneous divide is still pending. Hence many computations are easiest in view space:
+
+* Lighting: the camera sits at the origin, so the view vector is simply normalize(-viewModelPosition.xyz). Typically passed as a varying to the fragment shader for Phong or Blinn Phong.
+* Distance effects: fog, depth based fading, or LOD via length(viewModelPosition.xyz) or -viewModelPosition.z.
+* Point size attenuation: setting gl_PointSize based on distance to the camera.
+* View space displacement: billboarding (offsetting vertices so quads always face the camera), view aligned wobble effects.
+* Custom clipping: user clip planes defined relative to the camera.
+* Reflection and environment mapping: computing reflection vectors from view direction and normal.
+
+
 ---
 .header[Shader Pipeline | GLSL]
 
@@ -1285,6 +1316,332 @@ We can send data from the vertex shader to the fragment shader using varying.
 
 
 
+---
+template:inverse
+
+## Hands On!
+# 👩🏽‍💻
+
+---
+layout:false
+
+.header[Shader Pipeline | three.js]
+
+## What is three.js?
+
+* A JavaScript library for 3D graphics in the browser
+* Sits on top of WebGL
+
+--
+
+Raw WebGL is verbose: drawing a single triangle means
+
+* writing shaders,
+* creating buffers,
+* compiling programs and
+* setting GPU state by hand.
+
+three.js wraps all of that in a few understandable objects.
+
+.footnote[[[three.js]](https://threejs.org)]
+
+---
+.header[Shader Pipeline | three.js]
+
+## Core Concepts
+
+| Concept      | What it is                                                                                  |
+| ------------ | ------------------------------------------------------------------------------------------- |
+| **Renderer** | Draws the scene into a `<canvas>` using WebGL.                                              |
+| **Scene**    | A container (a tree of objects) holding everything that should be drawn.                    |
+| **Camera**   | The point of view the scene is rendered from.                                               |
+| **Mesh**     | A visible object, made of a Geometry and a Material.                                        |
+| **Geometry** | The shape: vertices (positions), normals, UVs, etc.                                         |
+| **Material** | How the surface looks. Internally, every material is a **vertex shader + fragment shader**. |
+
+???
+
+* Every frame, the renderer takes the scene and the camera, sends each mesh's geometry to the GPU, and runs the material's shaders to work out the color of each pixel.
+* Built-in materials such as `MeshBasicMaterial` or `MeshStandardMaterial` ship with shaders already written for you.
+* We replace them with **our own shaders** via `ShaderMaterial` / `RawShaderMaterial`
+    * Direct control over both stages of the pipeline
+
+
+| #   | Block                                | Mandatory?             | Purpose                                                  |
+| --- | ------------------------------------ | ---------------------- | -------------------------------------------------------- |
+| 1   | Imports (`three`)                    | **Mandatory**          | Loads the library.                                       |
+| 1b  | Imports (`OrbitControls`, `lil-gui`) | Optional               | Mouse camera control and a debug UI.                     |
+| 2   | Canvas                               | **Mandatory**          | The HTML element we draw into.                           |
+| 3   | Sizes helper                         | Optional (convenient)  | Stores window width and height in one place.             |
+| 4   | Renderer                             | **Mandatory**          | Does the actual drawing.                                 |
+| 5   | Scene                                | **Mandatory**          | Holds all objects.                                       |
+| 6   | Geometry                             | **Mandatory**          | Shape of the object.                                     |
+| 7   | Material                             | **Mandatory**          | Look of the object (our shaders go here later).          |
+| 8   | Mesh (+ `scene.add`)                 | **Mandatory**          | Combines geometry and material and puts it in the scene. |
+| 9   | Camera                               | **Mandatory**          | Point of view.                                           |
+| 10  | OrbitControls                        | Optional               | Rotate, zoom and pan with the mouse.                     |
+| 11  | Resize handling                      | Optional (recommended) | Keeps the image correct when the window changes size.    |
+| 12  | Render loop (`animate`)              | **Mandatory**\*        | Calls `renderer.render(scene, camera)` every frame.      |
+
+.footnote[\* A single `renderer.render(scene, camera)` call is enough for a still image. A loop is needed as soon as anything moves: controls, animation, or time-based shaders.]
+
+
+.center[
+renderer  
+\+ scene  
+\+ camera  
+\+ mesh (geometry + material)  
+\+ `renderer.render(scene, camera)`
+]
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+### 1. Imports
+
+```js
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import GUI from 'lil-gui';
+```
+
+* `THREE` holds all the core classes (`Scene`, `Mesh`, `PerspectiveCamera`, …)
+* `OrbitControls` is an add-on, hence imported from `three/addons/`
+* `lil-gui` is a separate small library for sliders and checkboxes
+    * Commented out for now, later we use it to tweak shader values live
+
+???
+
+* Older tutorials use `three/examples/jsm/...`, which still works.
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+### 2. Canvas
+
+```js
+const canvas = document.querySelector("#canvasThree");
+```
+
+* Grabs the `<canvas id="canvasThree">` from `index.html`
+* Everything three.js draws ends up here
+
+--
+
+### 3. Sizes
+
+```js
+const sizes = { width: window.innerWidth, height: window.innerHeight };
+```
+
+* Holds the current window size
+* Used by renderer, camera and resize handler
+
+???
+
+* In `style.css`, the `#canvasThree` rule fixes the canvas to the top-left corner and sets `display: block`, so there's no gap or scrollbar around it.
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+### 4. Renderer
+
+```js
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setSize(sizes.width, sizes.height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+```
+
+* Connects three.js to the canvas and creates the WebGL context
+* `antialias: true` smooths jagged edges
+* `setSize` sets the canvas size to fill the window
+* `setPixelRatio` renders at the screen's real resolution (sharp on Retina/HiDPI screens)
+    * Capped at 2: higher ratios cost a lot of performance with hardly any visible gain
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+### 5. Scene
+
+```js
+const scene = new THREE.Scene();
+```
+
+* An empty container
+* Anything not added to the scene won't be rendered
+* The default background is black
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+### 6. Geometry
+
+```js
+const geometry = new THREE.PlaneGeometry(1, 1, 128, 128);
+```
+
+* A flat 1 × 1 square
+* Subdivided into 128 × 128 segments → 129 × 129 ≈ 16,600 vertices
+
+???
+
+Why so many?
+
+* A **vertex shader can only move vertices that exist**
+* With only 4 corner vertices, a wave would be impossible
+* With many vertices, we can push each one up or down to get a smooth wavy surface
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+### 7. Material
+
+```js
+const material = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide });
+```
+
+* `MeshBasicMaterial` is the simplest built-in material: one flat color, no lighting (default: white)
+* `side: THREE.DoubleSide` renders both faces of the plane
+    * By default only the front face is drawn, and the camera here looks at the plane slightly from below
+
+--
+
+**This is the line we will replace** with a `RawShaderMaterial` integrating our own vertex and fragment shaders.
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+### 8. Mesh
+
+```js
+const mesh = new THREE.Mesh(geometry, material);
+mesh.rotation.x = -Math.PI * 0.5;
+scene.add(mesh);
+```
+
+* A mesh = geometry + material
+* A plane starts out standing upright (in the XY plane)
+    * Rotating it by −90° (−π/2 radians) around X lays it flat like a floor (in the XZ plane)
+* `scene.add` makes it visible
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+### 9. Camera
+
+```js
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+camera.position.set(0.25, -0.25, 1);
+scene.add(camera);
+```
+
+`PerspectiveCamera(fov, aspect, near, far)`
+
+* **fov** `75`: vertical field of view in degrees
+* **aspect**: width / height of the image
+* **near** `0.1` / **far** `100`: only objects between these distances are drawn
+
+???
+
+The position is slightly to the right, slightly below the plane, and 1 unit back.
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+### 10. OrbitControls
+
+```js
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+```
+
+* Drag to rotate, scroll to zoom, right-drag to pan
+* The camera orbits around the origin `(0, 0, 0)`
+* `enableDamping` adds smooth inertia
+    * Requires `controls.update()` every frame
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+### 11. Resize Handling
+
+```js
+window.addEventListener('resize', () => {
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+    camera.aspect = sizes.width / sizes.height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(sizes.width, sizes.height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+```
+
+1. Update the stored sizes
+2. Update the camera's aspect ratio (otherwise the image stretches), then call `updateProjectionMatrix()` to apply it
+3. Resize the renderer and update the pixel ratio
+
+???
+
+* The pixel ratio changes when a window is moved between a Retina and a non-Retina screen.
+* The camera is created *before* this block, because the handler uses it.
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+### 12. Render Loop
+
+```js
+// const timer = new THREE.Timer();
+
+const animate = () => {
+    // timer.update();
+    // const elapsedTime = timer.getElapsed();
+    controls.update();
+    renderer.render(scene, camera);
+};
+
+renderer.setAnimationLoop(animate);
+```
+
+* `setAnimationLoop(animate)` calls `animate` before every screen refresh (usually 60 times per second)
+* Each frame: update the controls, then draw the scene from the camera
+
+???
+
+* `setAnimationLoop` is the modern three.js way to run the loop. Older tutorials call `window.requestAnimationFrame(animate)` at the end of `animate` instead, which works the same for plain WebGL. `setAnimationLoop` is required for WebXR (VR/AR) and the newer `WebGPURenderer`.
+
+
+* Later, `elapsedTime` will be passed to the shader as a *uniform* (e.g. `uTime`) to animate the waves
+* `timer.update()` must be called once per frame, before reading the time
+
+???
+
+* `THREE.Timer` replaces the older `THREE.Clock`, which is deprecated since three.js r183.
+
+---
+.header[Shader Pipeline | three.js | `01_scene_no_shader.js`]
+
+## Result
+
+* A white square lying flat on a black background
+* Seen from slightly below
+* You can orbit it with the mouse
+
+---
+## Get the Scene Up and Running
+
+1. **Shader Pipeline: steps, code**
+2. A Wavy Situation: steps, code
+
+
+For running the code examples:
+
+* Unzip the folder
+* With a terminal navigate into the folder 
+* Install the dependencies with `npm install`
+* Start a local server with `npm run dev`
+
+### three.js
 
 
 
@@ -1292,6 +1649,6 @@ We can send data from the vertex shader to the fragment shader using varying.
 template:inverse
 
 # ✨ 
-#### The End
+### The End
 
 
