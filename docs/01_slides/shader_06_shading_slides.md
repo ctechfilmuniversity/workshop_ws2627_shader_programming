@@ -867,6 +867,6 @@ template:inverse
 ---
 ## Exercise
 
-1. Follow the steps in [spheretracing_02_diffuse_shading_steps.md](../02_code/glsl/spheretracing/spheretracing_02_diffuse_shading_steps.md) to implement diffuse shading in the scene.
+1. Follow the steps in [spheretracing_02_diffuse_shading_steps.md](https://ctechfilmuniversity.github.io/workshop_ws2627_shader_programming/02_code/glsl/spheretracing/spheretracing_02_diffuse_shading_steps.html) to implement diffuse shading in the scene.
 2. Explore!
 

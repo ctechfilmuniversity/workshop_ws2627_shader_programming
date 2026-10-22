@@ -1149,7 +1149,7 @@ template:inverse
 ---
 ## Exercise
 
-To practice your understanding, implement a sphere tracer based on the given code pieces in [spheretracing_01_no_shading_inpieces.md](../02_code/glsl/spheretracing/spheretracing_01_no_shading_inpieces.md).
+To practice your understanding, implement a sphere tracer based on the given code pieces in [spheretracing_01_no_shading_inpieces.md](https://ctechfilmuniversity.github.io/workshop_ws2627_shader_programming/02_code/glsl/spheretracing/spheretracing_02_diffuse_shading_steps.html).
 
 You can find the solution in [spheretracing_01_no_shading.frag](../02_code/glsl/spheretracing/spheretracing_01_no_shading.frag).
 
