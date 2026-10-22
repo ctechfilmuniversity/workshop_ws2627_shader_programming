@@ -52,9 +52,9 @@ template: inverse
 
 
 ???
-.task[COMMENT:]  
+  
 
-* In the most basic sense what is 3D scene rendering?
+* In the most basic sense, what is 3D scene rendering?
 
 --
 
@@ -66,9 +66,7 @@ Hence, we need to convert a 3D scene into a 2D raster.
 
 .center[<img src="./img/frustum.png" alt="frustum" style="width:50%;">]
 
----
-
-## 3D Scene Rendering
+???
 
 .center[<img src="./img/frustum_02.png" alt="frustum_02" style="width:90%;">]  .imgref[[[techspot]](https://www.techspot.com/article/1888-how-to-3d-rendering-rasterization-ray-tracing/)]
 
@@ -77,7 +75,7 @@ Hence, we need to convert a 3D scene into a 2D raster.
 ## Rendering Algorithms
 
 ???
-.task[COMMENT:]  
+  
 
 There are several rendering algorithms in countless flavors. The two main categories are: 
 
@@ -91,16 +89,16 @@ There are several rendering algorithms in countless flavors. The two main catego
 
 
 ???
-.task[COMMENT:]  
+  
 
 
 * Rasterization
     * Projects polygons onto the picture plane, without advanced optical effects
-    * Very Fast
+    * Very fast
 * Raytracing
     * Cast rays through the picture plane into the scene from a specific point of view, can employ more advanced optical simulation
 * The fourth type of light transport technique, radiosity is not usually implemented as a rendering technique, but instead calculates the passage of light as it leaves the light source and illuminates surfaces. These surfaces are usually rendered to the display using one of the other three techniques.
-* Another distinction is between image order algorithms, which iterate over pixels of the image plane, and object order algorithms, which iterate over objects in the scene. Generally object order is more efficient, as there are usually fewer objects in a scene than pixels. 
+* Another distinction is between image order algorithms, which iterate over pixels of the image plane, and object order algorithms, which iterate over objects in the scene. Generally, object order is more efficient, as there are usually fewer objects in a scene than pixels. 
 
 ---
 
@@ -112,99 +110,37 @@ There are several rendering algorithms in countless flavors. The two main catego
 
 
 ???
-.task[COMMENT:]  
+  
 
-* Rasterisation is what renders the polygons, and it’s then combined with shadows and reflections created using Ray Tracing.
+* Rasterization is what renders the polygons, and it’s then combined with shadows and reflections created using Ray Tracing.
 * What is GPU rendering?
 
----
-template:inverse
-
-# Rasterization
 
 ---
 .header[Rendering Algorithms]
 
 ## Rasterization
+
+The mapping of the scene geometry to pixels:
+
+--
 
 .center[<img src="./img/rasterization_pipeline.png" alt="rasterization_pipeline" style="width:100%;">]
 
-.footnote[[Image Synthesis Lecture, M. Fuchs, 2016]]
- 
----
-.header[Rendering Algorithms]
-
-## Rasterization
-
-<img src="./img/rasterization_pipeline.png" alt="rasterization_pipeline" style="width:60%;">
-
-.footnote[[Image Synthesis Lecture, M. Fuchs, 2016]]
- 
   
-> The mapping of the scene geometry to pixels.
 
+
+.footnote[[Image Synthesis Lecture, M. Fuchs, 2016]]
+ 
 
 ???
-.task[COMMENT:]  
+  
 
 * Rasterization
     * Projects polygons onto the picture plane, without advanced optical effects
-    * Very Fast
+    * Very fast
 
 * The main problem with rasterization is that this technique has a difficult time tracking exactly how the light in a scene should travel and interact with other elements of the scene. 
-
----
-.header[Rendering Algorithms]
-
-## Rasterization
-
-.center[<img src="./img/shader_pipeline_vert.png" alt="shader_pipeline_vert" style="width:85%;">]
-
-???
-.task[COMMENT:]  
-
-* The **vertex shader** is responsible for the transformations applied on the vertices; mainly, the coordinate transforms required for the position, but it can also perform other calculations (e.g. Gouraud shading).
-* The **geometry shader** is able to remove and insert primitives into the primitive stream, right before actual rasterization begins.
-* **Tesselation shaders** are newer than geometry shaders, but come earlier in the pipeline. They were introduced, because
-    * geometry shaders were not general enough (what if we need more data for subdivision than the _ADJACENCY primitives can carry?)
-    * subdivision is a very common problem, but complicated to implement, and it would make sense to centralize some support.
-* As a solution, OpenGL includes tesselation shaders, and splits the tesselation problem into three subcomponents:
-    * The tesselation control shader decides into how many primitives the incoming GL_PATCH should be subdivided (and additional details)
-    * The hard-coded tesselation primitive generator performs the actual subdivision
-    * The tesselation evaluation shader gets to move the patch vertices resulting from the subdivision.
-
----
-.header[Rendering Algorithms]
-
-## Rasterization
-
-.center[<img src="./img/shader_pipeline_rast.png" alt="shader_pipeline_rast.png" style="width:100%;">]
-
-.footnote[[Image Synthesis Lecture, M. Fuchs, 2016]]
-
----
-.header[Rendering Algorithms]
-
-## Rasterization
-
-.center[<img src="./img/shader_pipeline_frag.png" alt="shader_pipeline_frag" style="width:90%;">]
-
-.footnote[[Image Synthesis Lecture, M. Fuchs, 2016]]
-
-???
-.task[COMMENT:]  
-
-* The fragment shader is used for shading. It defines the the look of the fragments, can modify output color and depth and can discard fragments from the pipeline.
-
-
-.center[<img src="./img/opengl-coordinate_systems.png" alt="opengl-coordinate_systems.png" style="width:110%;">]
-
-
-* Applying transformations can be understood as a change of coordinate systems (change of base + change of origin).
-    * In image order rendering, we usually transform the viewing ray into the local coordinate system.
-    * In object order rendering, we transform the primitives into screen coordinates (where rasterization takes place).
-* It makes many transformations invertible: thus, we can easily change our perspective between “moving the camera” and “moving the object”.
-
 
 
 ---
@@ -221,7 +157,7 @@ template:inverse
 
 
 ???
-.task[COMMENT:]  
+  
 
 * Raytracing
     * Cast rays through the picture plane into the scene from a specific point of view, can employ more advanced optical simulation
@@ -234,9 +170,9 @@ Underweysung der Messung (Nuremberg, 1525) .imgref[[[nvidia]](https://blogs.nvid
 
 
 ???
-.task[COMMENT:]  
+  
 
-* The string’s the thing: Albrecht Dürer was the first to describe what’s now known as “ray tracing,” a technique for creating accurate representations of 3D objects on a 2D surfaces in Underweysung der Messung (Nuremberg, 1525),f15
+* The string’s the thing: Albrecht Dürer was the first to describe what’s now known as “ray tracing,” a technique for creating accurate representations of 3D objects on a 2D surface in Underweysung der Messung (Nuremberg, 1525).
 * Dürer made it his life’s work to bring classical and contemporary mathematics together with the arts, achieving breakthroughs in expressiveness and realism.
 * In 1969, more than 400 years after Dürer’s death, IBM’s Arthur Appel showed how the idea of ray tracing could be brought to computer graphics, applying it to computing visibility and shadows.
 * A decade later, Turner Whitted was the first to show how this idea could capture reflection, shadows and refraction, explaining how the seemingly simple concept could make much more sophisticated computer graphics possible. Progress was rapid in the following few years.
@@ -289,7 +225,7 @@ Light transport is reversible with respect to time and we can trace the light ra
 --
 
 .right-even[
-Advantage: We are only interested in the light that hits the eye, anyways!
+Advantage: We are only interested in the light that hits the eye, anyway!
 ]
 
 ---
@@ -348,7 +284,7 @@ For every point on the image plane
 
 ???
 
-Dedicated hardware has remained exotic, but general purpose GPU computing is becoming the standard.
+Dedicated hardware has remained exotic, but general-purpose GPU computing is becoming the standard.
 
 Cons
 
@@ -366,7 +302,7 @@ Pros
 
 
 ???
-.task[COMMENT:]  
+  
 
 * The various rendering techniques in computer graphics attempt to solve and approximate this equation. 
 
@@ -394,7 +330,7 @@ for (int j = 0; j < imageHeight; ++j) {
 
             Ray ray = buildCameraRay(i, j); 
 
-            if (intersect(ray, objects[k]) { 
+            if (intersect(ray, objects[k])) { 
                 framebuffer[j][i] = objects[k].color; 
             } 
             else { 
@@ -416,7 +352,7 @@ for (int j = 0; j < imageHeight; ++j) {
 
 
 ???
-.task[COMMENT:]  
+  
 
 * A better implementation is possible, as for example demonstrated here: http://madebyevan.com/webgl-path-tracing/  
 
@@ -440,15 +376,15 @@ Ray Tracing comes in many flavors
 
 
 ???
-.task[COMMENT:]  
+  
 
 * Ray Casting
     * Simplest form of ray tracing
     * Cast a ray for each pixel (or vertical scanline) of the image plane
     * Solve ray-surface intersection test
 * Path Tracing
-    * Solve the rendering equation via Monte-Carlo integration
-    * Trace a rays with weighted random reflections/transmissions
+    * Solve the rendering equation via Monte Carlo integration
+    * Trace rays with weighted random reflections/transmissions
     * Multiple iterations are required to avoid noisy images
 * Ray Marching
     * Also known as sphere marching
@@ -466,7 +402,7 @@ Some form of path tracing is the core of most high-quality render engines.
 
 
 ???
-.task[COMMENT:]  
+  
 
 * The rendering equation is concise, but not easy to solve. Computer graphics scenes are complex, with billions of triangles not being unusual today. There’s no way to solve the rendering equation directly, which led to Kajiya’s second crucial innovation.
 * Kajiya showed that statistical techniques could be used to solve the rendering equation: even if it isn’t solved directly, it’s possible to solve it along the paths of individual rays. If it is solved along the path of enough rays to approximate the lighting in the scene accurately, photorealistic images are possible.
@@ -481,7 +417,7 @@ Some form of path tracing is the core of most high-quality render engines.
 
 
 ???
-.task[COMMENT:]  
+  
 
 * https://blogs.nvidia.com/blog/2022/03/23/what-is-path-tracing/
 
@@ -506,13 +442,13 @@ For every point on the image plane
 ---
 .header[Rendering Algorithms | Ray Tracing]
 
-## Ray - Object Intersection
+## Ray–Object Intersection
 
 Classical ray tracing algorithms solve the intersection of a ray and an object algebraically.
 
 --
 
-For triangulated meshes, [ray-triangle intersections](https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/ray-triangle-intersection-geometric-solution.html) are performant to compute.
+For triangulated meshes, [ray-triangle intersections](https://www.scratchapixel.com/lessons/3d-basic-rendering/ray-tracing-rendering-a-triangle/ray-triangle-intersection-geometric-solution.html) are efficient to compute.
 
 --
 .left-even[<img src="./img/bunny_01.png" alt="bunny_01" style="width:60%;">]
@@ -548,7 +484,7 @@ template:inverse
 
 --
 
-With the gained popularity of real-time solutions and rendering in the fragment shader, the need for
+With the growing popularity of real-time solutions and rendering in the fragment shader, the need for
 
 --
 * lighter scene representations
@@ -567,11 +503,11 @@ became more prominent.
 
 
 ???
-.task[COMMENT:]  
+  
 
 Later:
 * Instead of computing the intersection of a ray with a surface directly, ray marching steps along the ray until an intersection is found.
-* the main difference between ray casting and ray marching, is the fact that ray casting uses explicit equations while ray marching uses implicit equations to render the scene.
+* The main difference between ray casting and ray marching is the fact that ray casting uses explicit equations while ray marching uses implicit equations to render the scene.
 * Raycasting is good for immediately getting the intersection if one exists. Raymarching is good for objects that cannot be described easily in a simple equation.
 
 
@@ -611,15 +547,13 @@ template:inverse
 .left-even[<img src="./img/fragments_01.png" alt="fragments_01" style="width:100%;">]
 
 .right-even[
-1. Shoot a ray through each fragment into the scene
-2. Detect the surface a ray hits and use the surface color for the fragment
+1. Shoot a ray through each fragment into the scene.
+2. Detect the surface a ray hits and use the surface color for the fragment.
 
 ]
 
 
----
-
-## The Rendering Scenario
+???
 
 .center[<img src="./img/frustum_01.png" alt="frustum_01" style="width:60%;">]
 
@@ -660,6 +594,11 @@ template:inverse
 
 .center[<img src="./img/rendering_06.png" alt="rendering_06" style="width:70%;">]
 .footnote[[based on: [scratchapixel](https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-ray-tracing)]]
+
+???
+* Point of view: sits at the camera's origin, looking down the +z axis.
+* Image plane: placed at a distance of 1 in front of the eye.
+* p is the fragment's position on that plane in x and y (z is 1 as defined)
 
 ---
 ## The Rendering Scenario
@@ -743,7 +682,7 @@ vec3 ray_direction =
 .left-even[<img src="./img/rendering_08.png" alt="rendering_08" style="width:100%;">]
 
 .right-even[
-> How to detect where a ray hits a surfaces?
+> How to detect where a ray hits a surface?
 ]
 
 .footnote[[[scratchapixel]](https://www.scratchapixel.com/lessons/3d-basic-rendering/introduction-to-ray-tracing)]
@@ -776,8 +715,8 @@ Strictly speaking, we don't even have a "surface" but a function...
 
 .right-even[
 ```glsl
-float sdfCircle(vec2 p, float r)
-{
+float sdfCircle(vec2 p, float r) {
+
     return length(p) - r;
 }
 ```
@@ -795,8 +734,8 @@ Strictly speaking, we don't even have a "surface" but a function...
 
 .right-even[
 ```glsl
-float sdfCircle(vec2 p, float r)
-{
+float sdfCircle(vec2 p, float r) {
+    
     return length(p) - r;
 }
 ```
@@ -842,7 +781,7 @@ template:inverse
 
 
 ???
-.task[COMMENT:]  
+  
 
 * What could be the issue here, regarding performance?
 
@@ -877,7 +816,7 @@ Sphere tracing implements smarter step sizes.
 
 
 ???
-.task[COMMENT:]  
+  
 
 * This algorithm is called *sphere tracing* because when you compute the smallest distance from a point to all surfaces, this distance can be seen as the radius of a sphere within which we can move freely without ever intersecting with a surface. 
 
@@ -952,11 +891,11 @@ The distance computation from a point to the surface depends on the different sh
 
 ## Distance Implicit Functions 
 
-For basic shapes there are simple mathematical formula for this.
+For basic shapes there are simple mathematical formulas for this.
 
 
 ???
-.task[COMMENT:]  
+  
 
 * DIFs
 
@@ -986,9 +925,9 @@ $||P - C||$
 
 
 ???
-.task[COMMENT:]  
+  
 
-* With ||P - C|| as squared distance `sqrtf(x*x+y*y+z*z)`
+* With ||P - C|| as the Euclidean distance `sqrtf(x*x+y*y+z*z)`
 
 
 ---
@@ -1057,13 +996,13 @@ This is the *distance implicit function* of a sphere.
 $d(P,Sphere)=||P - C|| − r$  
   
 <br >
-Important: this equation assumes that the the center of the sphere is at the origin! 
+Important: this equation assumes that the center of the sphere is at the origin! 
 ]
 
 ???
-.task[COMMENT:]  
+  
 
-* Next week we will learn how to deal with transformations such as scale, rotation and translation. But for now, we will assume a the shape centred around the origin.
+* Next week we will learn how to deal with transformations such as scale, rotation and translation. But for now, we will assume the shape is centered around the origin.
 
 
 ---
@@ -1093,19 +1032,19 @@ Important: this equation assumes that the the center of the sphere is at the ori
 
 ## Closest Distance To a Plane
 
-For a plane that is parallel to one of the axis of the coordinate system, we can simply use the coordinate of the point on that axis for the distance.
+For a plane that is parallel to one of the axes of the coordinate system, we can simply use the coordinate of the point on that axis for the distance.
   
 --
   
 <br >
 
-For example, for a axis-aligned plane in y
+For example, for an axis-aligned plane in y
   
 $d(P, Plane)= P.y$  
 
 
 ???
-.task[COMMENT:]  
+  
 
 * DIF Axis-Aligned
 * We will come back to this...
@@ -1122,7 +1061,7 @@ There is also a *generic* solution based on calculus (called DUF) for any implic
 
 
 ???
-.task[COMMENT:]  
+  
 
 * It finds the optimum or underestimated distance of a point to any implicit surface description. But that formula is a bit more complicated...
 
@@ -1149,13 +1088,13 @@ template:inverse
 
 --
 
-* We start with the coordinates of the fragment coordinate that needs to get a color
+* We start with the coordinates of the fragment that needs to get a color
 
 --
 * We normalize those coordinates, e.g. to a system between -1 and 1 with the origin at the center of the screen
 
 --
-* We shoot from a point of view ("camera") a ray through the fragment into the scene
+* From a point of view ("camera"), we shoot a ray through the fragment into the scene
 
 --
 * We go step by step along the view ray in order to find the surface it hits
@@ -1172,22 +1111,22 @@ template:inverse
 
 # Summary
 
-* We start with the coordinates of the fragment coordinate that needs to get a color
+* We start with the coordinates of the fragment that needs to get a color
 * We normalize those coordinates, e.g. to a system between -1 and 1 with the origin at the center of the screen
-* We shoot from a point of view ("camera") a ray through the fragment into the scene
+* From a point of view ("camera"), we shoot a ray through the fragment into the scene
 * We go step by step along the view ray in order to find the surface it hits
-* We take the color of the hit surface point as fragment color - we will come back to this
+* We take the color of the hit surface point as the fragment color – we will come back to this
 
 ---
 .header[Sphere Tracing]
 
 # Summary
 
-* We start with the coordinates of the fragment coordinate that needs to get a color
+* We start with the coordinates of the fragment that needs to get a color
 * We normalize those coordinates, e.g. to a system between -1 and 1 with the origin at the center of the screen
-* We shoot from a point of view ("camera") a ray through the fragment into the scene
+* From a point of view ("camera"), we shoot a ray through the fragment into the scene
 * We go step by step along the view ray in order to find the surface it hits
-* (We take the color of the hit surface point as fragment color - we will come back to this)
+* (We take the color of the hit surface point as the fragment color – we will come back to this)
 
 --
     * For now we set a fixed color for the object
@@ -1201,27 +1140,20 @@ template:inverse
 # ✨ 
 #### The End
 
-
----
-template:inverse
-
-## Hands On!
-# 👩🏽‍💻
-
-
 ???
-.task[COMMENT:]  
-
 * Show distance shaded version
 * Show flat shaded version
-* Put version together
-* 45min
 
-* Visualize Number of steps: https://www.scratchapixel.com/lessons/advanced-rendering/rendering-distance-fields/basic-sphere-tracer
+
 
 ---
 ## Exercise
 
-1. Implement a sphere tracer based on the given code pieces in [spheretracing_01_no_shading_inpieces.md](../02_code/fragmentshader/spheretracing_01_no_shading_inpieces.md)
+To practice your understanding, implement a sphere tracer based on the given code pieces in [spheretracing_01_no_shading_inpieces.md](../02_code/glsl/spheretracing/spheretracing_01_no_shading_inpieces.md).
+
+You can find the solution in [spheretracing_01_no_shading.frag](../02_code/glsl/spheretracing/spheretracing_01_no_shading.frag).
+
+
+
 
 

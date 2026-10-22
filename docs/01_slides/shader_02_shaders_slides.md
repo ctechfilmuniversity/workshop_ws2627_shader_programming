@@ -1314,6 +1314,13 @@ We can send data from the vertex shader to the fragment shader using varying.
 * Per-fragment values, read only
 * Available in the fragment shader
 
+---
+template:inverse
+
+# ✨ 
+### The End
+
+
 
 
 ---
@@ -1628,7 +1635,7 @@ renderer.setAnimationLoop(animate);
 * You can orbit it with the mouse
 
 ---
-## Get the Scene Up and Running
+## Exercise
 
 1. **Shader Pipeline: steps, code**
 2. A Wavy Situation: steps, code
@@ -1640,15 +1647,4 @@ For running the code examples:
 * With a terminal navigate into the folder 
 * Install the dependencies with `npm install`
 * Start a local server with `npm run dev`
-
-### three.js
-
-
-
----
-template:inverse
-
-# ✨ 
-### The End
-
 

@@ -23,7 +23,7 @@ layout:false
 
 
 ???
-.task[COMMENT:]  
+  
 
 * Which big issue do we still have to solve for being able to compute shading?
     * The surface normals
@@ -35,7 +35,7 @@ For shading effects we need to know how a surface point is oriented towards the 
 
 
 ???
-.task[COMMENT:]  
+  
 
 * With what do we compute that?
 
@@ -45,7 +45,7 @@ Hence, we need the *normal* of a point on a surface.
 
 --
 
-.center[<img src="./img/normal_01.png" alt="normal_01" style="width:94%;">.imgref[[[wiki]](https://www.wikiwand.com/en/Normal_(geometry)]]
+.center[<img src="./img/normal_01.png" alt="normal_01" style="width:94%;">.imgref[[[wiki]](https://www.wikiwand.com/en/Normal_(geometry))]]
 
 ---
 .header[Implicit Surfaces]
@@ -61,11 +61,11 @@ But we have...
 
 ## Normals
 
-For computing the normal $n$ at a point $p$ on a implicit surface, we can use the ***gradient*** of the signed distance function at that point.  
+For computing the normal $n$ at a point $p$ on an implicit surface, we can use the ***gradient*** of the signed distance function at that point.  
 
 
 ???
-.task[COMMENT:]  
+  
 
 * What is the gradient?
 
@@ -84,14 +84,14 @@ The gradient vector can be interpreted as the *direction and rate of the fastest
 
 
 ???
-.task[COMMENT:]  
+  
 
 * If the gradient of a function is non-zero at a point p, the direction of the gradient is the direction in which the function increases most quickly from p, and the magnitude of the gradient is the rate of increase in that direction, the greatest absolute directional derivative.
 
 
 
 ???
-.task[COMMENT:]  
+  
 
 For 2D functions the gradient is a 2D vector, and for 3D functions it is a 3D vector.   
 
@@ -108,10 +108,10 @@ For 2D functions the gradient is a 2D vector, and for 3D functions it is a 3D ve
 * For functions f(x,y) or f(x,y,z), you would speak of the *gradient*
 
 ???
-.task[COMMENT:]  
+  
 
 * Mathematically the concept of gradient is not limited to 2D or 3D functions but in computer graphics, these are the cases that are the most relevant. 
-* To be more specific, let's say that if you had a function f(x) you would speak of derivative, but if you had a function f(x,y) or f(x,y,z), you would speak of gradient. If the latter case, we say that that we have a function of several variables.
+* To be more specific, let's say that if you had a function f(x) you would speak of derivative, but if you had a function f(x,y) or f(x,y,z), you would speak of gradient. In the latter case, we say that we have a function of several variables.
 
 ---
 .header[Implicit Surfaces]
@@ -122,7 +122,7 @@ It can be mathematically proven that the gradient of a differentiable implicit f
 
 
 ???
-.task[COMMENT:]  
+  
 
 * Or isolines in 2D
 
@@ -138,13 +138,13 @@ $n = normalize(\nabla f(p))$
 .footnote[[[Wiki](https://www.wikiwand.com/en/Gradient), [Inigo Quilez](https://www.iquilezles.org/www/articles/normalsSDF/normalsSDF.htm)]]
 
 ???
-.task[COMMENT:]  
+  
 
 * The nabla symbol, written as an upside-down triangle and pronounced "del", can be understood as gradient
-* It denotes actually the partial derivatives of f at point p.
+* It actually denotes the partial derivatives of f at point p.
     * Differentiation with respect to x, holding y and z constant 
     * Same for y and z
-    * Then adding the derivatives up
+    * Then combining the results into one vector
 
 
 ---
@@ -159,18 +159,18 @@ $n = normalize(\nabla f(p))$
 
 
 ???
-.task[COMMENT:]  
+  
 
-* Imagine the right figure as a vertical slice in function left whose values over space are given by an implicit function f(x,y,z)= c. 
-* The iso-surfaces right show what the density fields looks like for five different values of c. 
-* As can you see the gradients vectors are pointing out in the direction of greatest rate of change and their magnitude is also proportional to this rate (a larger gap between two adjacent lines indicates a greater rate of change). You can also visually check that these gradient vectors are perpendicular to the tangents to the curves
+* Imagine the right figure as a vertical slice through the function on the left, whose values over space are given by an implicit function f(x,y,z)= c. 
+* The iso-surfaces on the right show what the density field looks like for five different values of c. 
+* As you can see, the gradient vectors are pointing out in the direction of greatest rate of change and their magnitude is also proportional to this rate (a larger gap between two adjacent lines indicates a greater rate of change). You can also visually check that these gradient vectors are perpendicular to the tangents to the curves
 
 ---
 .header[Implicit Surfaces]
 
 ## Normals
 
-There are multiple ways to compute such a gradient, all with different advantages and disadvantages
+There are multiple ways to compute such a gradient, all with different advantages and disadvantages.
 
 --
 * Numerical approximations
@@ -178,16 +178,16 @@ There are multiple ways to compute such a gradient, all with different advantage
 
 
 ???
-.task[COMMENT:]  
+  
 Some are numerical, others are analytical, all with different advantages and disadvantages.
 
 --
-A favorite due to its simplicity
+A favorite due to its simplicity:
 
 * Using **central differences** based on the **partial derivatives** of a function
 
 ???
-.task[COMMENT:]  
+  
 The most common one in the context of computing normals for an implicit surface is the approach of using **central differences** based on the **partial derivatives** of a function.
 
 .footnote[[[Wiki](https://www.wikiwand.com/en/Gradient), [Inigo Quilez](https://www.iquilezles.org/www/articles/normalsSDF/normalsSDF.htm)]]
@@ -198,9 +198,9 @@ It is neither the fastest nor the most accurate.
 
 
 ???
-.task[COMMENT:]  
+  
 
-*  It might not be the fastest or most accurate. Still, its simplicity make it the most popular way to compute normals in realtime ray-marched or sphere traced demos and games.
+*  It might not be the fastest or most accurate. Still, its simplicity makes it the most popular way to compute normals in real-time ray-marched or sphere traced demos and games.
 
 ---
 .header[Implicit Surfaces | Normals]
@@ -211,7 +211,7 @@ It is neither the fastest nor the most accurate.
 You can compute the derivative of $f(x)$ with $h$ approaching $0$ as
   
 
-$\lim_{h \to 0} = \dfrac{f(x+h) - f(x-h)}{2h}.$  
+$f'(x) = \lim_{h \to 0} \dfrac{f(x+h) - f(x-h)}{2h}.$  
   
 The result gives us the slope of the tangent at P along the x-axis.
 ]
@@ -224,18 +224,18 @@ The result gives us the slope of the tangent at P along the x-axis.
 .footnote[[[scratchapixel]](https://www.scratchapixel.com/lessons/advanced-rendering/rendering-distance-fields/basic-sphere-tracer)]
 
 ???
-.task[COMMENT:]  
+  
 
-* Now we would like to compute the rate of change of that function at a given point P in space. How we do that? The solution is simple: you compute the gradient by essentially decomposing this problem into simpler ones. 
-* The idea is to take a small step towards the left of P and evaluate the function there, then do the same thing to the right, subtract the two numbers and normalize (which is done by dividing the finite difference by h=(a+b).
-* If we repeat the process for the other two axes, then we get three numbers which as you maybe guess, put together form a three-dimensional vectors.
+* Now we would like to compute the rate of change of that function at a given point P in space. How do we do that? The solution is simple: you compute the gradient by essentially decomposing this problem into simpler ones. 
+* The idea is to take a small step towards the left of P and evaluate the function there, then do the same thing to the right, subtract the two numbers and normalize (which is done by dividing the finite difference by h=(a+b)).
+* If we repeat the process for the other two axes, then we get three numbers which, as you may have guessed, together form a three-dimensional vector.
 
 ---
 .header[Implicit Surfaces]
 
 ## Normals
 
-The complete gradient is now computed by taking such partial derivative of the function $f(x,y,z)$ on each axis $\vec i = (1,0,0), \vec j =(0,1,0), \vec k =(0,0,1)$.
+The complete gradient is now computed by taking such a partial derivative of the function $f(x,y,z)$ on each axis $\vec i = (1,0,0), \vec j =(0,1,0), \vec k =(0,0,1)$.
 
 --
 
@@ -252,14 +252,14 @@ We then combine the results to form the three-dimensional gradient vector.
 
 --
 
-The x-, y- and z-coordinate of that vector indicates the rate-of-change of the function $f$ along the x-, y- and z-axis respectively.
+The x-, y- and z-coordinates of that vector indicate the rate of change of the function $f$ along the x-, y- and z-axis respectively.
 
 ---
 .header[Sphere Tracing]
 
 ## Normals
 
-For the implementation we can discard the normalization with the division by 2h as we rescale the normal anyways to unit length. Hence we do not need to take care of the proper magnitude of the vector.
+For the implementation we can discard the normalization with the division by 2h as we rescale the normal to unit length anyway. Hence, we do not need to take care of the proper magnitude of the vector.
 
 --
 
@@ -281,8 +281,7 @@ For h we set some small value, e.g. 0.0001 and call it EPSILON.
 --
 
 ```glsl
-vec3 estimateNormal(vec3 p) // p is point_on_surface
-{
+vec3 estimateNormal(vec3 p) { // p is point_on_surface
     vec3 n = vec3(
         sdfScene(vec3(p.x + EPSILON, p.y, p.z)) 
                         - sdfScene(vec3(p.x - EPSILON, p.y, p.z)),
@@ -304,11 +303,10 @@ vec3 estimateNormal(vec3 p) // p is point_on_surface
 
 ## Normals
 
-We can do this a bit more elegantly... with swiffeling!
+We can do this a bit more elegantly... with swizzling!
 
 ```glsl
-vec3 estimateNormal(vec3 p) // p is point_on_surface
-{
+vec3 estimateNormal(vec3 p) { // p is point_on_surface
     const vec2 h = vec2(EPSILON,0);
     vec3 n = vec3(sdfScene(p + h.xyy) - sdfScene(p - h.xyy),
                   sdfScene(p + h.yxy) - sdfScene(p - h.yxy),
@@ -328,10 +326,7 @@ vec3 estimateNormal(vec3 p) // p is point_on_surface
 
 Now that we have the normals, and with that can compute how a surface is e.g. oriented towards the light, we can do some basic shading.
 
----
-.header[Sphere Tracing]
-
-## Simple Shading
+???
 
 .center[<img src="./img/tracing_00.png" alt="tracing_00" style="width:45%;">]
 
@@ -363,7 +358,7 @@ Now that we have the normals, and with that can compute how a surface is e.g. or
 ## Simple Shading
 
 
-As reflection behavior we are going to do a ***diffuse shading***, also called *lambert* shading.
+As reflection behavior we are going to do a ***diffuse shading***, also called *Lambert* shading.
 
 
 
@@ -378,7 +373,7 @@ template: inverse
 ## Diffuse Reflection
 
 ???
-.task[COMMENT:]  
+  
 
 * What is a diffuse reflection?
 
@@ -398,7 +393,7 @@ It only depends on the light direction.
 
 ## Diffuse Reflection
 
-In comparison a shiny reflection:
+In comparison, a shiny reflection:
 
 .center[<img src="./img/reflection_shiny.png" alt="reflection_shiny" style="width:100%;">]
 
@@ -538,7 +533,7 @@ ${cosθ}$:
 
 ## Lambert's Cosine Law
 
-We need to decrease in the intensity of the light by a factor of ${cosθ}$
+We need to decrease the intensity of the light by a factor of ${cosθ}$.
   
 --
 .center[<img src="./img/coslaw_04.png" alt="coslaw_04" style="width:100%;">]
@@ -572,7 +567,7 @@ ${cosθ} = L ∙ N$
 
 
 ???
-.task[COMMENT:]  
+  
 
 * What should the factor be? -> 0
 
@@ -593,9 +588,9 @@ The factor should be zero...
 
 
 ???
-.task[COMMENT:]  
+  
 
-* and should not be illuminated at all. 
+* and the surface should not be illuminated at all. 
 
 
 ---
@@ -607,16 +602,16 @@ The factor should be zero...
 > What about the light facing in the opposite direction of the surface normal?
   
 
-The factor should be zero and should not be illuminated at all. 
+The factor should be zero, and the surface should not be illuminated at all. 
 ]
 
 .right-even[<img src="./img/lambert_03.png" alt="lambert_03" style="width:60%;">]  
 
 
 ???
-.task[COMMENT:]  
+  
 
-* and should not be illuminated at all. 
+* and the surface should not be illuminated at all. 
 
 
 ---
@@ -639,7 +634,7 @@ The factor should be zero and should not be illuminated at all.
 ## Lambert's Cosine Law
 
 .left-even[
-Lucky Us! 
+Lucky us! 
 
 The dot product becomes negative when the surface is facing away from the light source.
 ]
@@ -651,10 +646,10 @@ The dot product becomes negative when the surface is facing away from the light 
 
 
 ???
-.task[COMMENT:]  
+  
  
   
-* ANy ideas how to do this algorithmically? What to do with cosinus?
+* Any ideas how to do this algorithmically? What to do with the cosine?
 
 ---
 .header[Diffuse Reflection | Light Direction]
@@ -676,7 +671,7 @@ $max(L ∙ N, 0)$
 
 $max(L ∙ N, 0)$
 
-This is  *Lambertian reflection*.
+This is *Lambertian reflection*.
 
 --
 
@@ -791,7 +786,7 @@ return color_material * reflection_diffuse + color_ambient;
 ## Shadows
 
 ???
-.task[COMMENT:]  
+  
 
 * Ideas?
 
@@ -843,8 +838,7 @@ float distance_to_scene_light_direction =
 --
 ```glsl
 float shading_shadow = 1.;
-if(distance_to_scene_light_direction < length(light_position-point_on_surface)) 
-{
+if(distance_to_scene_light_direction < length(light_position-point_on_surface)) {
     shading_shadow *= .1;
 }
 ```
@@ -873,6 +867,6 @@ template:inverse
 ---
 ## Exercise
 
-1. Follow the steps in [spheretracing_03_diffuse_shading_steps.md](./02_code/fragmentshader/spheretracing_02_diffuse_shading_steps.md) to implement diffuse shading in the scene.
+1. Follow the steps in [spheretracing_02_diffuse_shading_steps.md](./02_code/fragmentshader/spheretracing_02_diffuse_shading_steps.md) to implement diffuse shading in the scene.
 2. Explore!
 

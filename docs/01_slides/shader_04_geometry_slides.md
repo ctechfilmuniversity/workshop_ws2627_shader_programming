@@ -37,7 +37,7 @@ layout:false
 
 --
 
-.right-even[There are many possible representations for a geometric object in three dimensional space!
+.right-even[There are many possible representations for a geometric object in three-dimensional space!
 ]
 
 ---
@@ -47,7 +47,7 @@ layout:false
 
 .left-even[<img src="./img/preview_09.png" alt="preview_09" style="width:100%;">]
 
-.right-even[There are many possible representations for a geometric object in three dimensional space!
+.right-even[There are many possible representations for a geometric object in three-dimensional space!
 
 * Polygonal meshes
 * Parametric surfaces
@@ -63,7 +63,7 @@ layout:false
 
 .left-even[<img src="./img/preview_09.png" alt="preview_09" style="width:100%;">]
 
-.right-even[There are many possible representations for a geometric object in three dimensional space!
+.right-even[There are many possible representations for a geometric object in three-dimensional space!
 
 * Polygonal meshes
 * Parametric surfaces
@@ -77,7 +77,7 @@ Which description is suitable depends on the context.
 
 
 ???
-.task[COMMENT:]  
+  
 
 3
 What do we need from shapes
@@ -95,7 +95,7 @@ https://viterbi-web.usc.edu/~jbarbic/cs420-s24/09-meshes/09-meshes.pdf
 ---
 ## Geometry
 
-A rough analogy is to the different surface representations is to think about vector vs. raster graphics:
+A rough analogy for the different surface representations is to think about vector vs. raster graphics:
 
 .center[<img src="./img/vector_raster.png" alt="vector_raster" style="width:60%;">  
 .imgref[[[justcreative]](https://justcreative.com/raster-vs-vector-graphics-ultimate-guide/)]]
@@ -106,12 +106,12 @@ These are different representations for graphics with individual strengths and w
 
 
 ???
-.task[COMMENT:]  
+  
 
 More precisely, you call these two families of shapes in computer graphics:
 
 * Parametric descriptions
-* Implicit  descriptions
+* Implicit descriptions
 
 ---
 .header[Geometry]
@@ -133,7 +133,7 @@ A set of linked vertices.
 
 
 ???
-.task[COMMENT:]  
+  
 
 Polygon Meshes  
 • Any shape can be modeled out of  
@@ -205,7 +205,7 @@ The good
 * Easily exchangeable between programs
 
 --
-* Modern graphics hardware is really good and fast with processing and displaying meshes
+* Modern graphics hardware is really good and fast at processing and displaying meshes
 
 --
 * Lots of published research and algorithms for meshes
@@ -234,7 +234,7 @@ The bad
 
 
 ???
-.task[COMMENT:]  
+  
 
 * Usually based on a parametric representation, from which it is easy to generate a triangle mesh
 
@@ -265,7 +265,7 @@ Analytically defined geometry, meaning a **function** or equations define the ge
 
 --
 
-These representations can be understood as a *procedural modelling* technique.
+These representations can be understood as a *procedural modeling* technique.
 
 
 ---
@@ -277,20 +277,13 @@ These representations can be understood as a *procedural modelling* technique.
 
 
 
----
-.header[Geometry]
-
-## Parametric Description
-
-
 ???
-.task[COMMENT:]  
+  
 
 – e.g. plane, cylinder, bicubic surface, swept surface
 
---
 
-.left-even[A sphere surface as function of two parameters, θ and ϕ:  
+.left-even[A sphere surface as a function of two parameters, θ and ϕ:  
 
 $x = r · cos ϕ · sin θ$  
 $y = r · sin ϕ · sin θ$  
@@ -300,69 +293,16 @@ $z = r · cos ϕ $
 .right-even[<img src="./img/sphere_parametric_01.png" alt="sphere_parametric_01" style="width:90%;"> .imgref[[[songho]](https://www.songho.ca/opengl/gl_sphere.html)]]
 
 
-???
-.task[COMMENT:]  
 
 * theta, phi
-* Bezier curves and surfaces are an example of parametric shapes.
+* Bézier curves and surfaces are an example of parametric shapes.
 * We won't discuss in this lesson the differences between implicit and parametric forms
 * How to find a point on the surface of the sphere?
     * You plug in values for θ, ϕ and r and with that you get the position of a point on the sphere. 
-
----
-.header[Geometry]
-
-## Parametric Description
-
-.left-even[A sphere surface as function of two parameters, θ and ϕ:    
-
-$x = r · cos ϕ · sin θ$  
-$y = r · sin ϕ · sin θ$  
-$z = r · cos ϕ $ 
-  
-<br >
 
 This is *explicit* as you have explicit parameters.  
 
-
-]
-
-.right-even[<img src="./img/sphere_parametric_01.png" alt="sphere_parametric_01" style="width:90%;"> .imgref[[[songho]](https://www.songho.ca/opengl/gl_sphere.html)]]
-
-
-???
-.task[COMMENT:]  
-
-* theta, phi
-* Bezier curves and surfaces are an example of parametric shapes.
-* We won't discuss in this lesson the differences between implicit and parametric forms
-* How to find a point on the surface of the sphere?
-    * You plug in values for θ, ϕ and r and with that you get the position of a point on the sphere. 
-
----
-.header[Geometry]
-
-## Parametric Description
-
-.left-even[
-The good
-* Much more compact
-* More convenient to control by editing parameters
-* Easy to construct from parameters
-]
-
---
-
-.right-even[
-The bad 
-* Work well for smooth surfaces
-* Often must still split surfaces into discrete number of patches
-* Rendering times are higher than for polygons
-* Intersection test? Inside/outside test?
-]
-
-.footnote[[Jernej Barbic. [Polygon Meshes and Implicit Surfaces](https://viterbi-web.usc.edu/~jbarbic/cs420-s24/09-meshes/09-meshes.pdf). CSCI 420 Computer Graphics
-Lecture 9. University of Southern California.]]
+How a fragment shader works: it runs once per pixel, and each pixel only knows its own coordinate uv. It can't draw anywhere else. All it can do is answer: "What color am I?" So the shape description has to answer: "Is this point inside the shape, on its edge, or outside?" The implicit form answers that directly.
 
 ---
 .header[Geometry]
@@ -372,10 +312,13 @@ Lecture 9. University of Southern California.]]
 --
 
 .left-quarter[<img src="./img/implicit_geometry_02.png" alt="implicit_geometry_02" style="width:110%;">]
+
+--
+
 .right-quarter[
 ```GLSL
-void main()
-{
+void main() {
+
     vec2 p = (2.0 * gl_FragCoord.xy - u_resolution.xy) 
                   / u_resolution.y;
 
@@ -388,20 +331,20 @@ void main()
 
 
 ???
-.task[COMMENT:]  
+  
 
-* Now, we can add a radius variable and decide based on that radius and the distance, wether the currently computed pixel (aka point, aka xy or uv or st) is inside of the circle or not. Points inside the circle will have a distance from the center less than the radius, points on the circle will have distance equal to the radius, and points outside the circle will have distances greater than the radius.
+* Now, we can add a radius variable and decide based on that radius and the distance, whether the currently computed pixel (aka point, aka xy or uv or st) is inside of the circle or not. Points inside the circle will have a distance from the center less than the radius, points on the circle will have distance equal to the radius, and points outside the circle will have distances greater than the radius.
 
 ---
 .header[Geometry]
 
-## Implicit Surfaces
+## Implicit Geometry
 
 .left-quarter[<img src="./img/implicit_geometry_03.png" alt="implicit_geometry_03" style="width:110%;">]
 .right-quarter[
 ```GLSL
-void main()
-{
+void main() {
+
     vec2 p = (2.0 * gl_FragCoord.xy - u_resolution.xy) 
                   / u_resolution.y;
 
@@ -418,94 +361,63 @@ void main()
 ]
 
 ???
-.task[COMMENT:]  
+  
 
-* Now, we can add a radius variable and decide based on that radius and the distance, wether the currently computed pixel (aka point, aka xy or uv or st) is inside of the circle or not. Points inside the circle will have a distance from the center less than the radius, points on the circle will have distance equal to the radius, and points outside the circle will have distances greater than the radius.
+* Now, we can add a radius variable and decide based on that radius and the distance, whether the currently computed pixel (aka point, aka xy or uv or st) is inside of the circle or not. Points inside the circle will have a distance from the center less than the radius, points on the circle will have distance equal to the radius, and points outside the circle will have distances greater than the radius.
+
+
+.center[
+<img src="./img/geometry_01.png" alt="geometry_01" style="width:44%;">  
+$F(x,y) = x^2 + y^2 - r^2$
+]
+
+???
+
+* Set the coordinates in relationship to each other in order to describe a shape.
+    * This is an *implicit* description.
+
 
 ---
 .header[Geometry]
 
-## Parametric & Implicit Geometry
+## Implicit Geometry
 
-
-
-.left-even[
-Parametric  
-<img src="./img/geometry_02.png" alt="geometry_02" style="width:65%;">  
-<img src="./img/geometry_02a.png" alt="geometry_02a" style="width:55%;"> 
-]
-
+$0 = x^2+y^2 - r^2$
 
 --
-
-.right-even[
-Implicit  
-<img src="./img/geometry_01.png" alt="geometry_01" style="width:80%;">  
-$F(x,y) = x^2 + y^2 - r^2$
-]
-
-
----
-.header[Geometry | Implicit Surfaces]
-
-## Sphere Surface Description
-
-> Set the coordinates in relationship to each other in order to describe a shape.
   
+$d(x,y) = \sqrt{x^2+y^2} - r$  
+
+--
   
---
-
-This is an *implicit* description.
-
----
-.header[Geometry | Implicit Surfaces]
-
-## Sphere Surface Description
-
-Every point on the surface has the same distance, namely the radius, to its center.  
-
---
-
-$x^2+y^2 = r^2$
-
-
-???
-.task[COMMENT:]  
-
-* Hence, in implicit form as quadratic function you can describe a sphere at the origin as 
-
---
-
-Solve it as quadratic function
-
-$x^2+y^2-r^2 = 0$
-
---
-
-Setting $r^2$ to a constant will return a sphere with radius $r$:
-  
-$F(x,y) = x^2+y^2 - r$  
+Is the same as:
 
 --
 
 ```glsl
-float sphere(vec2 p, float r)
-{
+float circle(vec2 p, float r) {
     return length(p) - r;
 }
 ```
 
+--
+
+With $|d|$ as distance to the edge
+* $d < 0$ → inside
+* $d = 0$ → on the circle 
+* $d > 0$ → outside
+
 ---
 .header[Geometry | Implicit Surfaces]
 
-## Sphere Surface Description
+## Circle Surface Description
 
 
 You can think of an implicit function as a function that represents many surfaces that are sort of laid out as layers.  
 
 --
 
-For a sphere the layer depends on the given $r$:
+For a circle, the layer depends on the given $r$:
 
 .left-even[<img src="./img/sdf_sphere_01.png" alt="sdf_sphere_01" style="width:100%;">  [[Inigo Quilez]](https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm)]  
 
@@ -515,8 +427,8 @@ For a sphere the layer depends on the given $r$:
 Centered at the origin:
 
 ```glsl
-float sphere(vec2 p, float r)
-{
+float circle(vec2 p, float r) {
+
     return length(p) - r;
 }
 ```
@@ -527,26 +439,6 @@ float sphere(vec2 p, float r)
 ---
 .header[Geometry]
 ## Implicit Surfaces
-
-  
-Solving for  
-
-$x^2+y^2 − r=0$
-
---
-
-will tell you wether you are **outside**, **inside** or **on** the surface of the sphere. 
-
-
-???
-.task[COMMENT:]  
-
-* How to find a point on the surface of the sphere?
-* All an implicit representation says is that points that actually lie on the surface of the sphere, in other words all points making up the surface of the sphere or its isosurface, satisfy this equation.
-* The formula results in 0 for a given point, if it is on the surface. 
-* (Hence, for *implicit* surfaces the actual surface is not directly defined.)
-
---
 
 > What the implicit representation computes is also called the ***Signed Distance Function*** of a sphere.
 
@@ -628,7 +520,7 @@ If the point is
 * outside the surface, the distance will be positive, and
 * on the surface, the distance is 0.
 
-The collection of points that lie exactly on the surface are called an *isosurface*.
+The collection of points that lie exactly on the surface is called an *isosurface*.
 ]
 
 
@@ -642,13 +534,13 @@ The collection of points that lie exactly on the surface are called an *isosurfa
 .left-quarter[<img src="./img/implicit_geometry_03.png" alt="implicit_geometry_03" style="width:110%;">]
 .right-quarter[
 ```GLSL
-float sdf_circle(vec2 p, float radius)
-{
+float sdf_circle(vec2 p, float radius) {
+
     return length(p) - radius;
 }
 
-void main()
-{
+void main() {
+
     vec2 p = (2.0 * gl_FragCoord.xy - u_resolution.xy) / u_resolution.y;
     
     float radius = 0.2;
@@ -665,7 +557,7 @@ void main()
 ## Implicit Surfaces
 
 ???
-.task[COMMENT:]  
+  
 
 * Analytically defined geometry, meaning a **function** or equations define the geometry. 
 
@@ -684,7 +576,7 @@ The good
 
 .right-even[
 The bad
-* The maths involved might be difficult
+* The math involved might be difficult
 * Topologically limited 
 ]
 
@@ -696,7 +588,7 @@ The bad
 .center[<img src="./img/sdf_01.png" alt="sdf_01" style="width:80%;"> .imgref[[[3D Primitives]](https://www.shadertoy.com/view/Xds3zN)]]
 
 ???
-.task[COMMENT:]  
+  
 
 * [2D SDF Functions](https://iquilezles.org/articles/distfunctions2d/)
 * https://www.shadertoy.com/results?query=tag%3Dsdf
@@ -717,22 +609,25 @@ You can easily combine functions to create **composite shapes**.
 
 
 ???
-.task[COMMENT:]  
+  
 
-* One of the cool properties of this representation is that you can combine them to create composite shapes. For example, for the union of shapes, we take the minimum values of all computed distance functions:
+* One of the cool properties of this representation is that you can combine them to create composite shapes. For example, for the union of shapes, we take the minimum value of all computed distance functions:
 
 
 ---
 ## Combining Distance Functions
 
+*How to add surfaces?*
+
 .left-even[<img src="./img/sdf_01.gif" alt="sdf_01" style="width:100%;"> ]
 
 
 ???
-.task[COMMENT:]  
+  
 
 * How to add surfaces?
 
+*  ./glsl/circle/circle_union.frag
 
 --
 
@@ -750,18 +645,19 @@ Union
 
 
 ```glsl
-void main()
-{
+void main() {
     vec2 p = (2.0 * gl_FragCoord.xy - u_resolution.xy) / u_resolution.y;
+
     float radius = 0.2;
 
     // The circles
-    vec2 circle1_center = vec2(.5, 0.);
-    vec2 circle2_center = vec2(-0.5, 0.);
-    vec2 circle3_center = vec2(sin(u_time) * 0.4, 0.);
-    float circle1 = sdf_circle(p - circle1_center, radius);
-    float circle2 = sdf_circle(p - circle2_center, radius);
-    float circle3 = sdf_circle(p - circle3_center, radius / 1.8);
+    vec2 circle1_center = p - vec2(.5, 0.);
+    vec2 circle2_center = p - vec2(-0.5, 0.);
+    vec2 circle3_center = p - vec2(sin(u_time) * 0.4, 0.);
+
+    float circle1 = sdf_circle(circle1_center, radius);
+    float circle2 = sdf_circle(circle2_center, radius);
+    float circle3 = sdf_circle(circle3_center, radius / 1.8);
 
     // Union of shapes 
     float d = min(circle1, circle2);
@@ -769,23 +665,25 @@ void main()
 
     // threshold color based on distance
     vec3 color = d < 0. ? vec3(0.) : vec3(1.);
-    fragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(color, 1.0);
 }
 ```
 
 ???
-.task[COMMENT:]  
+  
 
-*  implicit_geometry_02_combined.frag
+*  ./glsl/circle/circle_union.frag
 
 ---
 ## Combining Distance Functions
+
+*How to exclude surfaces?*
 
 .left-even[<img src="./img/sdf_02.gif" alt="sdf_02" style="width:100%;"> ]
 
 
 ???
-.task[COMMENT:]  
+  
 
 * How to create this scenario?
 
@@ -793,48 +691,94 @@ void main()
 --
 
 .right-even[
-
-<br >
 Subtraction
 
-* the max of two distances and multiplying that to the original value
+* multiply the distance by the max of itself and the cutting shape
+]
+
+---
+## Combining Distance Functions
+
+*How to exclude surfaces?*
+
+.left-even[<img src="./img/sdf_02.gif" alt="sdf_02" style="width:100%;"> ]
+
+
+.right-even[
+Subtraction
+
+* multiply the distance by the max of itself and the cutting shape
+* multiplying flips the sign where both shapes overlap → cutout
 ]
 
 ???
-.task[COMMENT:]  
+  
 
-* Aussen: + und - vom kleinen Kreis, ergibt wieder +
-* Innen: - und - vom kleinen Kreis, ergibt - mal - = +
 * https://www.shadertoy.com/view/tsdXD4
 
 
 ---
 ## Combining Distance Functions
 
+*How to exclude surfaces?*
+
 .left-even[<img src="./img/sdf_02.gif" alt="sdf_02" style="width:100%;"> ]
 
 .right-even[
-
-<br >
-Intersection
-
-* the max of two distances and multiplying that to the original value
+Subtraction
+* multiply the distance by the max of itself and the cutting shape
+* multiplying flips the sign where both shapes overlap → cutout
 
 ```glsl
 ...
-    // Intersection
     float d = min(circle1, circle2);
     d *= max(d, circle3);
 ...
 ```
 ]
 
-???
-.task[COMMENT:]  
 
-* Aussen: + und - vom kleinen Kreis, ergibt wieder +
-* Innen: - und - vom kleinen Kreis, ergibt - mal - = +
-* https://www.shadertoy.com/view/tsdXD4
+---
+## Combining Distance Functions
+
+*How to exclude surfaces?*
+
+.left-even[<img src="./img/sdf_02.gif" alt="sdf_02" style="width:100%;"> ]
+
+.right-even[
+```glsl
+...
+    float d = min(circle1, circle2);
+    d *= max(d, circle3);
+...
+```
+]
+
+---
+## Combining Distance Functions
+
+*How to exclude surfaces?*
+
+.left-even[<img src="./img/sdf_02.gif" alt="sdf_02" style="width:100%;"> ]
+
+.right-even[
+```glsl
+...
+    float d1 = min(circle1, circle2); 
+    float d2 = d1 * max(d1, circle3);
+...
+```
+]
+
+--
+
+| Pixel                        | $d1$ | $c_3$ | $\max(d1, c_3)$ | $d1 \cdot \max$ | Result     |
+| ---------------------------- | ---- | ----- | --------------- | --------------- | ---------- |
+| outside $d_1$                | $+$  | any   | $+$             | $+ \cdot + = +$ | outside    |
+| inside $d_1$ & $c_3$ outside | $-$  | $+$   | $+$             | $- \cdot + = -$ | inside     |
+| inside $d_1$ & $c_3$ inside  | $-$  | $-$   | $-$             | $- \cdot - = +$ | **cutout** |
+
+
 
 ---
 ## Combining Distance Functions
@@ -853,8 +797,6 @@ At some point, I had accidentally put a `+`... with an interesting result:
 ```
 ]
 
---
-
 
 .left-even[<img src="./img/sdf_03.gif" alt="sdf_03" style="width:100%;"> ]
 
@@ -865,7 +807,7 @@ At some point, I had accidentally put a `+`... with an interesting result:
 
 
 ???
-.task[COMMENT:]  
+  
 
 * How to create this scenario?
 
@@ -875,15 +817,15 @@ At some point, I had accidentally put a `+`... with an interesting result:
 .right-even[
 
 <br >
-Smoothing out the intersection of the union of objects with a a [smooth minimum](https://www.iquilezles.org/www/articles/smin/smin.htm).
+Smoothing out the intersection of the union of objects with a [smooth minimum](https://iquilezles.org/articles/smin/).
 
 ]
 
 ???
-.task[COMMENT:]  
+  
 
 
-* Instead of finding a simple union or intersection, you can compute what is called a [smooth minimum](https://www.iquilezles.org/www/articles/smin/smin.htm). Essentially this allows you to take the union of two objects, and smooth out the intersection point. This allows shapes to blend together as they get near each other. 
+* Instead of finding a simple union or intersection, you can compute what is called a [smooth minimum](https://www.iquilezles.org/www/articles/smin/smin.htm). Essentially, this allows you to take the union of two objects, and smooth out the intersection point. This allows shapes to blend together as they get near each other. 
 
 
 
@@ -898,7 +840,7 @@ Smoothing out the intersection of the union of objects with a a [smooth minimum]
 .right-even[
 
 <br >
-Smoothing out the intersection of the union of objects with a a [smooth minimum](https://www.iquilezles.org/www/articles/smin/smin.htm).
+Smoothing out the intersection of the union of objects with a [smooth minimum](https://iquilezles.org/articles/smin/).
 
 ```glsl
 ...
@@ -910,7 +852,7 @@ Smoothing out the intersection of the union of objects with a a [smooth minimum]
 ]
 
 ???
-.task[COMMENT:]  
+  
 
 
 
@@ -928,7 +870,8 @@ Smoothing out the intersection of the union of objects with a a [smooth minimum]
 .right-even[
 
 <br >
-Smoothing out the intersection of the union of objects with a a [smooth minimum](https://www.iquilezles.org/www/articles/smin/smin.htm).
+Smoothing out the intersection of the union of objects with a [smooth minimum](https://iquilezles.org/articles/smin/).
+
 
 ```glsl
 ...
@@ -955,7 +898,7 @@ Smoothing out the intersection of the union of objects with a a [smooth minimum]
 
 Making it interactive (the smaller circle is controlled by the mouse)
 
-.left-even[<img src="../img/sdf_06.gif" alt="sdf_06" style="width:80%;">]
+.left-even[<img src="./img/sdf_06.gif" alt="sdf_06" style="width:80%;">]
 
 
 --
@@ -965,9 +908,8 @@ Making it interactive (the smaller circle is controlled by the mouse)
 
 
 ???
-.task[COMMENT:]  
+  
 
-* Show code examples: interactive, blobs
 
 
 ---
@@ -986,8 +928,8 @@ Making it interactive (the smaller circle is controlled by the mouse)
 Centered at the origin:
 
 ```glsl
-float sdf_rect(vec2 p, vec2 size)
-{
+float sdf_rect(vec2 p, vec2 size) {
+
     vec2 d = abs(p) - size;
 
     return length(max(d,0.0)) 
@@ -997,10 +939,40 @@ float sdf_rect(vec2 p, vec2 size)
 ]
 
 
-???
-.task[COMMENT:]  
+---
+.header[Implicit Surfaces]
 
-* TASK: Herleitug
+## Rectangle Surface Description
+
+
+
+.left-even[<img src="./img/sdf_rect_01.png" alt="sdf_rect_01" style="width:90%;">  
+.imgref[[[Inigo Quilez]](https://www.iquilezles.org/www/articles/distfunctions2d/distfunctions2d.htm)]]
+
+
+.right-even[
+Centered at the origin:
+
+```glsl
+float sdf_rect(vec2 p, vec2 size) {
+
+    vec2 d = abs(p) - size;
+
+    return length(max(d,0.0)) 
+            + min(max(d.x,d.y),0.0);
+}
+```
+  
+[My notes for an explanation ↗︎](./sdf_rectangle_explanation.pdf)
+
+]
+
+
+
+???
+  
+
+* Herleitung: explanation_sdf_rectangle.pdf
 
 
 
@@ -1020,22 +992,30 @@ We need a "ray hits surface" test...
 
 
 ???
-.task[COMMENT:]  
+  
 
 * Any ideas for a "ray hits surface" test?
 * We can easily test whether the current origin of a ray is inside the shape by computing its signed distance to the isosurface.  
-* SDF Gives us information about where the ray's origin is located in space with respect to the surface...
+* SDF gives us information about where the ray's origin is located in space with respect to the surface...
 * ...but not where the ray intersects the object (assuming the ray intersects it at all)  
 * This gives us some information about where the ray's origin is located in space with respect to the surface but not where the ray intersects the object (assuming the ray intersects it at all).  
+
 
 
 ---
 template:inverse
 
 # ✨ 
-#### The End
+### The End
 
 
+
+
+---
+template:inverse
+
+## Hands On!
+# 👩🏽‍💻
 
 
 
@@ -1044,11 +1024,5 @@ template:inverse
 
 --
 1. Create a 2D scene that is animated and / or interactive. Feel free to look up further [2D SDF Functions](https://iquilezles.org/articles/distfunctions2d/).
-
-
-
-???
-.task[COMMENT:]  
-
-2. Try to understand scene [`implicit_geometry_05_colored.frag`](https://ctechfilmuniversity.github.io/workshop_shader_programming/code/implicit_geometry_05_colored.html) as much as you can.
+2. Try to understand the scene [`circles_colored.frag`](../02_code/glsl/circle/circles_colored.frag) and make changes to it.
 

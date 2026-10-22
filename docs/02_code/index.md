@@ -13,6 +13,10 @@ In this section you find all code examples for the course.
     * [Setup](#setup)
     * [Run The Examples](#run-the-examples)
     * [three.js](#threejs)
+* [Day 2](#day-2)
+    * [Setup](#setup-1)
+    * [Implicit Geometry Circle](#implicit-geometry-circle)
+    * [Sphere Tracing](#sphere-tracing)
 
 
 ## Day 1
@@ -36,3 +40,30 @@ For running the code examples:
 
 1. Shader Pipeline: [steps](./threejs/01_shader_pipeline/shader_pipeline_steps.md), [code](./threejs/01_shader_pipeline/shader_pipeline_code.zip)
 2. A Wavy Situation: [steps](./threejs/02_wavy/wavy_steps.md), [code](./threejs/02_wavy/wavy_steps_code.zip)
+
+
+
+
+## Day 2
+  
+### Setup
+
+For working with the code, today we simply use [glsl-canvas](https://marketplace.visualstudio.com/items?itemName=circledev.glsl-canvas). 
+
+
+  
+### Implicit Geometry Circle
+  
+1. Circle SDF: [code](./glsl/circle/circle.frag)
+2. Circle Union: [code](./glsl/circle/circle_union.frag)
+3. Circle Subtract: [code](./glsl/circle/circle_subtract.frag)
+4. Circle SmoothMin: [code](./glsl/circle/circle_smoothmin.frag)
+5. Circle Interactive: [code](./glsl/circle/circle_interactive.frag)
+6. Circles as Color Blobs: [code](./glsl/circle/circle_colored.frag)
+
+
+### Sphere Tracing
+  
+1. Sphere Tracing Puzzling, no Shading: [puzzle](./glsl/spheretracing/spheretracing_01_no_shading_inpieces.md), [code solution](./glsl/spheretracing/spheretracing_01_no_shading.frag)
+2. Sphere Tracing with Shading: [steps](./glsl/spheretracing/spheretracing_02_diffuse_shading_steps.md) (start with this [code](./glsl/spheretracing/spheretracing_01_no_shading.frag)), [code solution](./glsl/spheretracing/spheretracing_03_diffuse_shading.frag)
+3. Sphere Tracing for Blobs: [code](./glsl/spheretracing/spheretracing_04_diffuse_shading_blobs.frag)
