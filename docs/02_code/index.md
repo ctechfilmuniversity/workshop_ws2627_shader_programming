@@ -59,7 +59,7 @@ For working with the code, today we simply use [glsl-canvas](https://marketplace
 3. Circle Subtract: [code](./glsl/circle/circle_subtract.frag)
 4. Circle SmoothMin: [code](./glsl/circle/circle_smoothmin.frag)
 5. Circle Interactive: [code](./glsl/circle/circle_interactive.frag)
-6. Circles as Color Blobs: [code](./glsl/circle/circle_colored.frag)
+6. Circles as Color Blobs: [code](./glsl/circle/circles_colored.frag)
 
 
 ### Sphere Tracing
