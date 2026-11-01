@@ -15,4 +15,6 @@ In this section you find all slides for the course.
 * [Geometry](./shader_04_geometry_slides.html)
 * [Rendering](./shader_05_rendering_slides.html)
 * [Simple Shading](./shader_06_shading_slides.html)
+* [Overview 3](./shader_07_overview_slides.html)
+* [Scene Building](./shader_08_scenebuilding_slides.html)
 

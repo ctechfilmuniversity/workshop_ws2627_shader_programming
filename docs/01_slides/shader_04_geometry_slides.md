@@ -547,7 +547,7 @@ void main() {
     float d = sdf_circle(p, radius);
 
     vec3 color = d < 0. ? vec3(0.) : vec3(1.);
-    fragColor = vec4(color, 1.0);
+    gl_FragColor = vec4(color, 1.0);
 }
 ```
 ]
@@ -846,7 +846,7 @@ Smoothing out the intersection of the union of objects with a [smooth minimum](h
 ...
     // Smooth Minimum
     float d = min(circle1, circle2);
-    d = smin(d, circle3, 0.2);
+    d = smin(d, circle3, 0.4);
 ...
 ```
 ]
@@ -877,7 +877,7 @@ Smoothing out the intersection of the union of objects with a [smooth minimum](h
 ...
     // Smooth Minimum
     float d = min(circle1, circle2);
-    d = smin(d, circle3, 0.2);
+    d = smin(d, circle3, 0.4);
 ...
 ```
 
@@ -1011,8 +1011,7 @@ template:inverse
 
 
 
----
-template:inverse
+???
 
 ## Hands On!
 # 👩🏽‍💻

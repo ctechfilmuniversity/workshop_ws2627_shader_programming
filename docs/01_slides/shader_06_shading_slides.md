@@ -680,7 +680,7 @@ Meaning this is the factor with which we need to multiply the incoming light.
 --
 
 ```glsl
-float reflection_diffuse = max(dot(light_direction_to_point, surface_normal), 0.);
+float reflection_diffuse = max(dot(surface_normal, direction_to_light), 0.);
 ```
 
 ---
@@ -707,7 +707,7 @@ We still need the light itself...
 vec3 light_position = vec3(2, 8, 0);
 
 // Light direction
-vec3 light_direction_to_point = normalize(light_position - point_on_surface);
+vec3 direction_to_light = normalize(light_position - point_on_surface);
 ```
 
 --
@@ -732,7 +732,7 @@ For simplicity, we are assuming a light intensity of (1, 1, 1).
 vec3 light_position = vec3(2, 8, 0);
 
 // Light direction
-vec3 light_direction_to_point = normalize(light_position - point_on_surface);
+vec3 direction_to_light = normalize(light_position - point_on_surface);
 ```
 
 --
@@ -743,7 +743,7 @@ vec3 surface_normal = estimateNormal(point_on_surface);
 
 // The reflection behavior
 vec3 color_material = vec3(0.8, 0.8, 0.8);
-float reflection_diffuse = max(dot(light_direction_to_point, surface_normal), 0.);
+float reflection_diffuse = max(dot(surface_normal, direction_to_light), 0.);
 
 return color_material * reflection_diffuse;
 ```
@@ -772,7 +772,7 @@ vec3 surface_normal = estimateNormal(point_on_surface);
 
 // The reflection behavior
 vec3 color_material = vec3(0.8, 0.8, 0.8);
-float reflection_diffuse = max(dot(surface_normal, light_direction_to_point), 0.);
+float reflection_diffuse = max(dot(surface_normal, direction_to_light), 0.);
 
 // A bit of additional ambient to lighten up everything
 vec3 color_ambient = vec3(0.06, 0.1, 0.2);
@@ -833,7 +833,7 @@ We need to check if there is an object between the point we are shading and the 
 
 vec3 point_moved_up = vec3 (point_on_surface + surface_normal * MOVE_POINT);
 float distance_to_scene_light_direction = 
-                        sphereTracing(point_moved_up, light_direction_to_point);
+                        sphereTracing(point_moved_up, direction_to_light);
 ```
 --
 ```glsl
@@ -858,8 +858,7 @@ template:inverse
 #### The End
 
 
----
-template:inverse
+???
 
 ## Hands On!
 # 🧑🏻‍💻
@@ -867,6 +866,6 @@ template:inverse
 ---
 ## Exercise
 
-1. Follow the steps in [spheretracing_02_diffuse_shading_steps.md](https://ctechfilmuniversity.github.io/workshop_ws2627_shader_programming/02_code/glsl/spheretracing/spheretracing_02_diffuse_shading_steps.html) to implement diffuse shading in the scene.
+1. Follow steps 4 to 6 in [spheretracing_steps.md](https://ctechfilmuniversity.github.io/workshop_ws2627_shader_programming/02_code/glsl/spheretracing/spheretracing_steps.html) to implement diffuse shading in the scene. You can start with [spheretracing_step_03_sphere_tracing.frag](../02_code/glsl/spheretracing/solution/spheretracing_step_03_sphere_tracing.frag).
 2. Explore!
 

@@ -17,6 +17,7 @@ In this section you find all code examples for the course.
     * [Setup](#setup-1)
     * [Implicit Geometry Circle](#implicit-geometry-circle)
     * [Sphere Tracing](#sphere-tracing)
+* [Day 3](#day-3)
 
 
 ## Day 1
@@ -64,6 +65,24 @@ For working with the code, today we simply use [glsl-canvas](https://marketplace
 
 ### Sphere Tracing
   
-1. Sphere Tracing Puzzling, no Shading: [puzzle](./glsl/spheretracing/spheretracing_01_no_shading_inpieces.md), [code solution](./glsl/spheretracing/spheretracing_01_no_shading.frag)
-2. Sphere Tracing with Shading: [steps](./glsl/spheretracing/spheretracing_02_diffuse_shading_steps.md) (start with this [code](./glsl/spheretracing/spheretracing_01_no_shading.frag)), [code solution](./glsl/spheretracing/spheretracing_03_diffuse_shading.frag)
-3. Sphere Tracing for Blobs: [code](./glsl/spheretracing/spheretracing_04_diffuse_shading_blobs.frag)
+1. Sphere Tracing Puzzling, no Shading: [puzzle](./glsl/spheretracing/puzzeling/spheretracing_01_no_shading_inpieces.md), [code solution](./glsl/spheretracing/puzzeling/spheretracing_01_no_shading.frag)
+
+
+## Day 3
+  
+1. Sphere Tracing: [steps](./glsl/spheretracing/spheretracing_steps.md), [code start](./glsl/spheretracing/spheretracing_step_00_start.frag)  
+Solutions:
+    * [The SDF of a Sphere](./glsl/spheretracing/solution/spheretracing_step_01_sdf_sphere.frag)
+    * [Ray Marching](./glsl/spheretracing/solution/spheretracing_step_02_ray_marching.frag)
+    * [Sphere Tracing](./glsl/spheretracing/solution/spheretracing_step_03_sphere_tracing.frag)
+    * [Normals](./glsl/spheretracing/solution/spheretracing_step_04_normals.frag)
+    * [Diffuse Shading](./glsl/spheretracing/solution/spheretracing_step_05_shading.frag)
+    * [Shadows](./glsl/spheretracing/solution/spheretracing_step_06_shadows.frag)
+2. Repetition: [steps](./glsl/scenesetup_repetition/scenesetup_repetition_steps.md), [code start](./glsl/scenesetup_repetition/scenesetup_repetition_step_00_start.frag)  
+Solutions:
+    * [Repetition](./glsl/scenesetup_repetition/solution/scenesetup_repetition_step_01_repetition.frag)
+    * [Fog](./glsl/scenesetup_repetition/solution/scenesetup_repetition_step_02_fog.frag)
+    * [Gamma Correction](./glsl/scenesetup_repetition/solution/scenesetup_repetition_step_03_gamma.frag)
+    * [Animate the Camera](./glsl/scenesetup_repetition/solution/scenesetup_repetition_step_04_camera.frag)
+    * [Random Offset](./glsl/scenesetup_repetition/solution/scenesetup_repetition_step_05_offset.frag)
+3. Metaballs: [code](./glsl/spheretracing_metaballs_01.frag)

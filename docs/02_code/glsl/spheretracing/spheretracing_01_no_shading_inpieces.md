@@ -17,7 +17,7 @@ You need to order and piece the following code snippets together to see the dist
 ```glsl
 // Signed distance function between
 // point and sphere
-float sdfSphere(vec3 point_on_ray, float radius) {
+float sdfSphere(vec3 p, float radius) {
     // Something goes here
 }
 ```
@@ -40,7 +40,7 @@ void main() {
 
 
 
-    // The fragement color we
+    // The fragment color we
     // are now going to compute
     vec3 color = vec3(0);
     
@@ -58,14 +58,15 @@ void main() {
 ```
 
 ```glsl
-return length(point_on_ray) - radius;
+return length(p) - radius;
 ```
 
 ```glsl
-    // Compute the new distance to scene
-    // from the just computed point on the 
-    // camera ray
-    distance_to_scene += sdfScene(point_on_ray);
+    // Compute the minimal distance from the
+    // current point to all surfaces in the scene
+    // (the radius of the sphere in which we
+    // can move freely)
+    float distance_to_scene = sdfScene(point_on_ray);
 ```
 
 ```glsl
@@ -84,20 +85,27 @@ color = vec3(distance_to_scene);
 
 
 ```glsl
-float distance_to_scene = 0.;
+// How far we have moved along the ray so far
+float distance_traveled = 0.;
 
 for(int i=0; i < STEPS_MAX; i++) {
-    // We move along the ray 
-    // the last distance_to_scene amount
-    vec3 point_on_ray = ray_origin + ray_direction * distance_to_scene;
+    // The current point on the ray
+    vec3 point_on_ray = ray_origin + ray_direction * distance_traveled;
 
     // Something goes here
 
-    // Did we overshoot or have a hit with the scene?
-    if(distance_to_scene > DISTANCE_MAX || distance_to_scene < DISTANCE_MIN) break;
+    // Is the step size below the threshold?
+    // Then we have a hit with the scene.
+    if(distance_to_scene < DISTANCE_MIN) break;
+
+    // Move along the ray by that distance
+    distance_traveled += distance_to_scene;
+
+    // Did we overshoot?
+    if(distance_traveled > DISTANCE_MAX) break;
 }
 
-return distance_to_scene;
+return distance_traveled;
 ```
 
 
@@ -109,8 +117,6 @@ uniform vec2 u_resolution;
 #define STEPS_MAX 100
 #define DISTANCE_MAX 100.
 #define DISTANCE_MIN .01
-
-out vec4 fragColor;
 ```
 
 ```glsl
@@ -144,7 +150,7 @@ float distance_to_scene = 1e20;
 // one sphere and a plane
 
 // Spheres (at the origin)
-distance_to_scene = min(distance_to_scene, sdfSphere(point_on_ray, 0.5));
+distance_to_scene = min(distance_to_scene, sdfSphere(p, 0.5));
 
 // Something goes here
 
@@ -152,15 +158,14 @@ return distance_to_scene;
 ```
 
 ```glsl
-#version 300 es 
-precision mediump float;
+precision highp float;
 ```
 
 ```glsl
 // This function computes the
 // minimal distance to all
 // surfaces in the scene.
-float sdfScene(vec3 point_on_ray) {
+float sdfScene(vec3 p) {
 
     // Something goes here
 
@@ -171,6 +176,6 @@ float sdfScene(vec3 point_on_ray) {
 // Plane 
 // (moved down by 0.5 - don't worry
 // about this translation just yet, we
-// will cover it in detail next week)
-distance_to_scene = min(distance_to_scene, point_on_ray.y + 0.5); // Axis aligned
+// will cover it in detail later)
+distance_to_scene = min(distance_to_scene, p.y + 0.5); // Axis aligned
 ```

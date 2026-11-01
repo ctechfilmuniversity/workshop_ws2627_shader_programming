@@ -33,7 +33,7 @@ void main() {
 
     // Smooth Minimum
     float d = min(circle1, circle2);
-    d = smin(d, circle3, 0.2);
+    d = smin(d, circle3, 0.4);
 
     // threshold color based on distance
     vec3 color = d < 0. ? vec3(0.) : vec3(1.);
