@@ -212,9 +212,11 @@ void main() {
 
 ```glsl
 float sphereTracing(vec3 ray_origin, vec3 ray_direction) {
+
     float distance_traveled = 0.;
 
     for(int i=0; i < STEPS_MAX; i++) {
+
         vec3 point_on_ray = ray_origin + ray_direction * distance_traveled;
 
         float distance_to_scene = sdfScene(point_on_ray);
@@ -225,7 +227,6 @@ float sphereTracing(vec3 ray_origin, vec3 ray_direction) {
 
         if(distance_traveled > DISTANCE_MAX) break;
     }
-
     return distance_traveled;
 }
 ```

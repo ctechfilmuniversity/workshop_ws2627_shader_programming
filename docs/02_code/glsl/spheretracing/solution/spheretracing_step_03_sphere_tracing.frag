@@ -25,6 +25,7 @@ float sdfSphere(vec3 p, float radius) {
 // minimal distance to all
 // surfaces in the scene.
 float sdfScene(vec3 p) {
+    
     // We need to compute the distance to all surfaces
     // in the scene and keep the smallest distance
     float distance_to_scene = 1e20;

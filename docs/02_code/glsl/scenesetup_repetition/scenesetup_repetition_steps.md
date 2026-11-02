@@ -185,14 +185,14 @@ As `a`, we need a fog factor that depends on the distance to the camera. For tha
 
     // The fog factor grows with the
     // distance to the camera
-    float fog = smoothstep(0., .95, distance_to_scene/FAR);
+    float fog = smoothstep(0., 1., distance_to_scene/FAR);
     // Applying the background fog
     color = mix(color, vec3(0.8), fog);
 ```
 
 * `distance_to_scene/FAR` is 0 at the camera and 1 at a distance of `FAR`.
 * The fog factor ranges between 0 and 1 and increases with `distance_to_scene`.
-* The smaller the second argument of `smoothstep()`, the faster the fog factor reaches 1. With `.95` this happens at a distance of 28.5.
+* The smaller the second argument of `smoothstep()`, the faster the fog factor reaches 1. With `1.`, this happens exactly at a distance of `FAR`.
 * The fog color `vec3(0.8)` is now our "background" as the rays through the gaps end up in the fog.
 
 The noise is gone. The spheres now fade into a light grey with the distance, and the star-shaped lines became smooth.

@@ -78,11 +78,15 @@ Solutions:
     * [Normals](./glsl/spheretracing/solution/spheretracing_step_04_normals.frag)
     * [Diffuse Shading](./glsl/spheretracing/solution/spheretracing_step_05_shading.frag)
     * [Shadows](./glsl/spheretracing/solution/spheretracing_step_06_shadows.frag)
-2. Repetition: [steps](./glsl/scenesetup_repetition/scenesetup_repetition_steps.md), [code start](./glsl/scenesetup_repetition/scenesetup_repetition_step_00_start.frag)  
+2. Transformations: [code](./glsl/scenesetup_transformations.frag)
+3. Metaballs: [code](./glsl/spheretracing_metaballs_01.frag)
+4. Repetition: [steps](./glsl/scenesetup_repetition/scenesetup_repetition_steps.md), [code start](./glsl/scenesetup_repetition/scenesetup_repetition_step_00_start.frag)  
 Solutions:
     * [Repetition](./glsl/scenesetup_repetition/solution/scenesetup_repetition_step_01_repetition.frag)
     * [Fog](./glsl/scenesetup_repetition/solution/scenesetup_repetition_step_02_fog.frag)
     * [Gamma Correction](./glsl/scenesetup_repetition/solution/scenesetup_repetition_step_03_gamma.frag)
     * [Animate the Camera](./glsl/scenesetup_repetition/solution/scenesetup_repetition_step_04_camera.frag)
     * [Random Offset](./glsl/scenesetup_repetition/solution/scenesetup_repetition_step_05_offset.frag)
-3. Metaballs: [code](./glsl/spheretracing_metaballs_01.frag)
+5. Examples:
+    * [Heart](./glsl/scenesetup_heart.frag)
+    * [Biomine](./glsl/scenesetup_biomine.frag)

@@ -27,6 +27,7 @@ float sdfSphere(vec3 p, float radius) {
 // ---- [D] Moving Along the Ray ----
 
 float rayMarching(vec3 ray_origin, vec3 ray_direction) {
+    
     // How far we have moved along the ray so far
     float distance_traveled = 0.;
 

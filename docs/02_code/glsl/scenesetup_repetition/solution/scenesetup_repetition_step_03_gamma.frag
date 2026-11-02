@@ -223,7 +223,7 @@ void main() {
 
     // The fog factor grows with the
     // distance to the camera
-    float fog = smoothstep(0., .95, distance_to_scene/FAR);
+    float fog = smoothstep(0., 1., distance_to_scene/FAR);
     // Applying the background fog
     color = mix(color, vec3(0.8), fog);
 

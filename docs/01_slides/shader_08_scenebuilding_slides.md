@@ -200,6 +200,7 @@ Points: $(3,3,3)$ and $(0,0,0)$
 ]
 
 
+
 ---
 .header[Transformations]
 ## Isometric vs. Non-Isometric Transformations
@@ -209,9 +210,51 @@ Points: $(3,3,3)$ and $(0,0,0)$
 
 * Distance $d = 5.196152$
 
+$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2 + (z_2 - z_1)^2} \\
+  = \sqrt{9 + 9 + 9} \\
+  = \sqrt{27} \\
+  \approx 5.196152$
 ]
 
 
+---
+.header[Transformations]
+## Isometric vs. Non-Isometric Transformations
+
+.left-even[
+Points: $(3,3,3)$ and $(0,0,0)$  
+
+* Distance $d = 5.196152$
+
+Translate with $(2,2,2)$:
+* $(3,3,3) \rightarrow (5,5,5)$
+* $(0,0,0) \rightarrow (2,2,2)$
+]
+
+---
+.header[Transformations]
+## Isometric vs. Non-Isometric Transformations
+
+.left-even[
+Points: $(3,3,3)$ and $(0,0,0)$  
+
+* Distance $d = 5.196152$
+
+Translate with $(2,2,2)$:
+* $(3,3,3) \rightarrow (5,5,5)$
+* $(0,0,0) \rightarrow (2,2,2)$
+  
+$d = \sqrt{(5 - 2)^2 + (5 - 2)^2 + (5 - 2)^2} \\
+  = \sqrt{9 + 9 + 9} \\
+  = \sqrt{27} \\
+  \approx 5.196152$
+]
+
+???
+  
+
+
+When we translate them with (2,2,2), we get (5,5,5) and (2,2,2) and with that preserved distances.  
 
 ---
 .header[Transformations]
@@ -228,19 +271,10 @@ Translate with $(2,2,2)$:
 * Distance $d = 5.196152$
 ]
 
-???
-  
-
-
-When we translate them with (2,2,2), we get (5,5,5) and (2,2,2) and with that preserved distances.  
-
---
-
 .right-even[
 Scale with $(2,2,2)$:
 * $(3,3,3) \rightarrow (6,6,6)$
 * $(0,0,0) \rightarrow (0,0,0)$
-* Distance: $d = 10.392305$
 ]
 
 
@@ -270,8 +304,12 @@ Translate with $(2,2,2)$:
 Scale with $(2,2,2)$:
 * $(3,3,3) \rightarrow (6,6,6)$
 * $(0,0,0) \rightarrow (0,0,0)$
-* Distance: $d = 10.392305$
 
+$d  = \sqrt{36 + 36 + 36} \\
+  = \sqrt{108} \\
+  \approx 10.392305$
+
+<br />
 Distances between a point on the ray and surface points don't compare anymore.
 ]
 
@@ -362,8 +400,6 @@ sdf(rotateZ(-theta) * p)
 
 
 * https://en.wikipedia.org/wiki/Rotation_matrix
-* spheretraching_08_transformations.frag
-    * Show rotation build up (without parentheses)
 
 ---
 .header[Transformations]
@@ -412,6 +448,10 @@ For now, we are only dealing with uniform scaling.
 ## Scaling
 
 Points: $(3,3,3)$ and $(0,0,0)$, Distance $d = 5.196152$
+
+???
+
+
 
 --
 
@@ -674,6 +714,9 @@ distance_to_scene = min(distance_to_scene, metaballs);
 --
 
 * `smin()` combines two shapes: first two spheres, then the result with the third
+
+???
+
 * The plane uses the normal `min()`, as we don't want the spheres to melt into it
 
 ---
@@ -693,7 +736,6 @@ vec3 center_3 = movement * vec3(sin(time * 1.2), sin(time * .6),  cos(time * .9)
 --
 
 * Each coordinate of each center moves with its own speed
-* The speeds don't line up: the spheres move on winding paths, and the shape keeps changing without obviously repeating
 * `movement` is small compared to the radii, so that the spheres stay close to each other
 
 ---
@@ -713,10 +755,10 @@ vec3 overlay = 0.5 + 0.5 * cos(u_time * 0.2 + p.xyx * 0.4 + vec3(0, 2, 4));
 * `u_time * 0.2`: the color slowly changes over time
 --
 
-* `p.xyx * 0.4`: a color gradient over the screen, based on the position of the fragment
+* `p.xyx * 0.4`: a color gradient over the screen, based on the position of the fragment with red and blue changing from left to right, and green changes from bottom to top
 --
 
-* `vec3(0, 2, 4)`: each channel starts at a different point of its cosine, so red, green and blue take turns in being bright (with equal channels, we would only see grey)
+* `vec3(0, 2, 4)`: each channel starts at a different point of its cosine (with equal channels, we would only see grey)
 
 ---
 .header[Constructive Solid Geometry | Metaballs in 3D]
@@ -739,8 +781,6 @@ color = overlay + color;
 
 * Background: the overlay, a bit darker
 * Surfaces: the shading is added on top and makes the overlay brighter where the light hits
-* Dark sides and shadows: the pure color of the overlay
-* `color_material` is only `vec3(0.5, 0.5, 0.5)`, otherwise the sum quickly turns white
 
 --
 
@@ -913,12 +953,12 @@ A fog factor based on a distance to the camera:
 ```glsl
 #define FAR 30.
 ...
-float fog = smoothstep(0., .95, distance_to_scene/FAR);
+float fog = smoothstep(0., 1., distance_to_scene/FAR);
 ```
-The fog factor 
+
 * Ranges between `0..1`
-* Increases with `distance_to_scene` and becomes 1 once `distance_to_scene >= 0.95 * FAR`
-* Becomes faster 1, the smaller the second argument (`0.95`)
+* Increases with `distance_to_scene` and becomes 1 once `distance_to_scene >= FAR`
+* Becomes faster 1, the smaller the second argument (`1.`)
 
 
 ???
@@ -926,14 +966,6 @@ The fog factor
 
 * The smoothstep function returns 0.0 if x is smaller than edge0 and 1.0 if x is larger than edge1. Otherwise the return value is interpolated between 0.0 and 1.0
 
-https://registry.khronos.org/OpenGL-Refpages/gl4/html/smoothstep.xhtml
-smoothstep performs smooth Hermite interpolation between 0 and 1 when edge0 < x < edge1. This is useful in cases where a threshold function with a smooth transition is desired. smoothstep is equivalent to:
-
-    genType t;  /* Or genDType t; */
-    t = clamp((x - edge0) / (edge1 - edge0), 0.0, 1.0);
-    return t * t * (3.0 - 2.0 * t);
-
-Results are undefined if edge0 ≥ edge1. 
 
 ---
 .header[Further Effects | Repetition Example]
@@ -945,7 +977,7 @@ Results are undefined if edge0 ≥ edge1.
 ```
 
 ```glsl
-float fog = smoothstep(0., .95, distance_to_scene/FAR);
+float fog = smoothstep(0., 1., distance_to_scene/FAR);
 // Applying the background fog 
 color = mix(color, vec3(0.8), fog); 
 ```
@@ -967,7 +999,7 @@ color = mix(color, vec3(0.8), fog);
 
 ## Gamma Correction
 
-Computer displays have a curious property: their color response is non-linear in respect to raw values passed from the graphics card. 
+Computer displays have the curious property that their color response is non-linear in respect to raw values passed from the graphics card. 
 
 .footnote[[[tutsplus]](https://gamedevelopment.tutsplus.com/articles/gamma-correction-and-why-it-matters--gamedev-14466)]
 
