@@ -90,3 +90,4 @@ Solutions:
 5. Examples:
     * [Heart](./glsl/scenesetup_heart.frag)
     * [Biomine](./glsl/scenesetup_biomine.frag)
+6. 3D Fragementshader in Three.js: [code](./threejs/threejs_fragmentshader.zip)
